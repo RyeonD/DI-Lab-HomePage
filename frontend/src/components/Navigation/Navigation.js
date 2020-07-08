@@ -7,8 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-
+import axios from 'axios';
 import './styles.scss'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,24 +34,26 @@ const useStyles = makeStyles((theme) => ({
         width:250
     }
 }));
-const MenuButton = ({content, locationFlag}) => {
-    const classes = useStyles();
-    console.log(content)
-    console.log(locationFlag)
 
-    return(
-        <>
-            <Button className={locationFlag ? classes.sideBarButton: classes.navButton} color="inherit">{content}</Button>
-            <Divider/>
-        </>
-    )
-}
 const MenuList = React.memo(({locationFlag}) => {
-    const menuItems = ['연구실', '구성원', '프로젝트', '게시판', 'Login']
+    const classes = useStyles();
+    const callApi = ()=>{
+        axios.get('/api/user/userInfo').then( res => {
+            console.log(res)
+        })
+    }
+    const menuItems = [
+        {menuName:'연구실'}, 
+        {menuName:'구성원'}, 
+        {menuName:'프로젝트'}, 
+        {menuName:'게시판'}, 
+        {menuName:'Login',clickEvent:callApi}]
     return (
         <>
             {menuItems.map((item,i) => (
-                <MenuButton content = {item} key = {i} locationFlag = {locationFlag}/>
+                <Button className={locationFlag ? classes.sideBarButton: classes.navButton} color="inherit" key = {i} onClick={item.clickEvent}>
+                    {item.menuName}
+                </Button>
             ))}
         </>
     )
