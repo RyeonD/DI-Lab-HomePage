@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec babel-node ./bin/www",
+    "start": "nodemon --exec babel-node ./bin/www.js",
     "deploy": ""
   },
   "dependencies": {
@@ -22,8 +22,7 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env"
+      "@babel/env"
     ]
-  },
-  "type": "module"
+  }
 }
