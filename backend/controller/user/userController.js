@@ -1,6 +1,10 @@
-import DAO from '../../model/mysql/userDAO.json';
+import dao from '../../model/mysql/userDAO';
+import {asyncWrapper} from '../../lib/helper'
 const getUserInfo = (req, res) => {
-    res.send(DAO)
+    dao.params.user_id = req.query.user_id;
+    dao.getUserInfo((err, rows)=>{
+        res.json(rows);
+    });
 }
 module.exports = {
     getUserInfo:getUserInfo
