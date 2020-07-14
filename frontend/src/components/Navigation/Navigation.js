@@ -13,12 +13,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-
+import {NavLink} from 'react-router-dom'
 import axios from 'axios';
 import './styles.scss'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        position: 'relative'
     },
     '@media screen and (max-width: 600px)' : {
         navButton:{display:'none'},
@@ -39,7 +40,16 @@ const useStyles = makeStyles((theme) => ({
     },
     sideBar:{
         width:250
-    }
+    },
+    noDecoration:{
+        color:'inherit',
+        textDecoration:'none',
+        '&::visited':{
+            color:'inherit',
+            textDecoration:'none',
+        }
+    },
+    
 }));
 const StyledMenu = withStyles({
     paper: {
@@ -85,18 +95,19 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             console.log(res);
         });
     };
-    const goTo = (target) => {
-        history.push(`/${target}`)
-    }
     const menuItems = [
-        { name: '연구실' }, 
+        { name: '연구실', 
+          destination: '' }, 
         { name: '구성원' }, 
         { name: '프로젝트'}, 
         { name: '게시판', 
           onClick: openMenu,
+          destination: 'openModal',
           nested: [ 
-              { name: '강의 게시판',   destination: 'forum'}, 
-              { name: '세미나 게시판', destination: 'forum'}]} , 
+              { name: '강의 게시판',   
+                destination: 'forum/lecture'}, 
+              { name: '세미나 게시판', 
+                destination: 'forum'}]} , 
         { name: 'Login',onClick:callApi }
     ];
 
@@ -112,18 +123,23 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                             onClick   = {openList}>
                         {item.name}
                     </Button>
-                    <Collapse in      = {Boolean(dropDownFlag && anchorEl.id == item.name)} 
-                                timeout = "auto" 
-                                unmountOnExit>
+                    <Collapse in      = {Boolean(dropDownFlag && anchorEl.id === item.name)} 
+                              timeout = "auto" 
+                              unmountOnExit>
                         <List component = "div" 
                                 disablePadding>
                             {item.nested.map((nestedItem, j) => {
                             return (
                             <ListItem className = {classes.nested} 
-                                        key       = {`${i}-${j}`}
+                                        key     = {`${i}-${j}`}
+                                        id      = {nestedItem.destination}
                                         button
-                                        onClick   = {(e) => {goTo(nestedItem.destination)}}>
-                                <ListItemText primary={nestedItem.name} />
+                                        onClick = {nestedItem.onClick}>
+                                <NavLink className = {classes.noDecoration} to = {{
+                                    pathname:`/${nestedItem.destination}`
+                                }}>
+                                    <ListItemText primary={nestedItem.name} />
+                                </NavLink>
                             </ListItem>)
                             })}
                         </List>
@@ -136,24 +152,30 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                 <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
                         color     = "inherit"
                         key       = {i}
-                        id        = {item.name}
-                        onClick   = {item.onClick}>
-                    {item.name}
+                        id        = {item.destination}
+                        onClick   = {item.nested ? item.onClick : null}>
+                    {item.nested ? item.name :
+                    <NavLink className = {classes.noDecoration}to = {{
+                        pathname:`/${item.destination}`}}>
+                        {item.name}
+                    </NavLink>}
                 </Button>
                 {
                 item.nested ? 
                 <StyledMenu id         = {item.name}
                             anchorEl   = {anchorEl}
                             keepMounted
-                            open       = {Boolean(anchorEl && anchorEl.id == item.name)}
+                            open       = {Boolean(anchorEl && anchorEl.id === item.destination)}
                             onClose    = {closeMenu}>
                     {item.nested.map((nestedItem, j) => 
                         <MenuItem key = {j}
-                                    onClick = {
-                                        (e) => {
-                                        closeMenu();
-                                        goTo(nestedItem.destination);}}>
-                            {nestedItem.name}
+                                  id  = {nestedItem.destination}
+                                  onClick = {closeMenu}>
+                            <NavLink className = {classes.noDecoration}to = {{
+                                    pathname:`/${nestedItem.destination}`
+                            }}>
+                                {nestedItem.name}
+                            </NavLink>
                         </MenuItem>
                     )}
                 </StyledMenu>:null
