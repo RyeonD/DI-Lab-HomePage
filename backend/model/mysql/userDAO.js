@@ -4,24 +4,17 @@ const params = {
     name         : null,
     password     : null
 }
-const getUserInfo = (callback) => {
-    db.getConnection((err, conn) => {
-        conn.query(
-            `select * 
-             from User
-             where user_id = ?
-            `,[
-                params.user_id
-            ],(err, rows) => {
-                conn.release();
-                if (!err){
-                    callback(null, rows);
-                }else{
-                    console.log('err',err);
-                }
-            }
-        )
-    })
+const getUserInfo = async() => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `select * 
+         from User
+         where user_id = ?
+        `,[
+            params.user_id
+    ])
+    await connection.release();
+    return rows
 }
 module.exports = {
     params: params,
