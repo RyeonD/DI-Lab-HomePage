@@ -80,7 +80,6 @@ const Forum = () => {
                 from_number:0,
             }
         }).then( res => {
-            console.log(res);
             setPosts(res.data.result);
             setPageCount(Math.ceil(res.data.count / 20))
         });

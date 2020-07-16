@@ -1,6 +1,6 @@
 const config = require('../../config/dbConfig.js')
 
-const mysql = require('mysql')
+const mysql = require('mysql2/promise')
 const pool = mysql.createPool({
                 connectionLimit  : 20,
                 user: config.mysql.user,
@@ -9,8 +9,8 @@ const pool = mysql.createPool({
                 database:config.mysql.database,
                 waitForConnections:false
             })
-const getConnection = (query) => {
-    return pool.getConnection(query)
+const getConnection = async () => {
+    return await pool.getConnection(async conn => conn)
 }
 module.exports = {
     pool: pool,
