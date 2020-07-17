@@ -67,35 +67,39 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Forum = () => {
+const Forum = ({ match, location}) => {
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
     const classes = useStyles();
-
-    useEffect(() => {
+    const {category} = match.params
+    const getPosts = () => {
         axios.get('/api/posts/posts',{
             params: {
-                category:'lecture',
+                category:category,
                 from_number:0,
             }
         }).then( res => {
             setPosts(res.data.result);
             setPageCount(Math.ceil(res.data.count / 20))
         });
-    }, [])
+    }
+    useEffect(() => {
+        getPosts()
+    },[])
+    useEffect(() => {
+        getPosts()
+    },[category])
     const handlePage = (e, value) => {
         setPage(value);
         axios.get('/api/posts/posts',{
             params:{
-                category:'lecture',
+                category:category,
                 from_number:(value-1) * 20
             }
         }).then(res => {
-            console.log(res)
             setPosts(res.data.result)
             document.getElementById('forum').scrollTo({top:0,behavior:'smooth'})
-            
         })
     }
     return (
@@ -141,7 +145,7 @@ const Forum = () => {
                         <TableRow key={i}>
                         <TableCell className={classes.tableContents}component="th" scope="row" align="left">
                             <NavLink to = {{
-                                pathname: `/forum/lecture/${row.post_id}`,
+                                pathname: `/forum/${category}/${row.post_id}`,
                                 state:row
                             }}>
                                 {row.title}
@@ -163,9 +167,9 @@ const Forum = () => {
                         showLastButton 
                         showFirstButton/>
             <NavLink to = {{
-                pathname: `/forum/lecture/addPost`,
+                pathname: `/forum/${category}/addPost`,
                 state:{
-                    category: 'lecture'
+                    category: category
                 }
             }}>
                 <Fab color      = "primary" 

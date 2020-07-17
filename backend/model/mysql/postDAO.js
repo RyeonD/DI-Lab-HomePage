@@ -34,6 +34,18 @@ const getNextPage = async () => {
     await connection.release();
     return rows
 }
+const getPost = async () => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `select *
+        from Posts
+        where post_id = ?
+        `,[
+            params.post_id
+    ])
+    await connection.release();
+    return rows
+}
 const addPost = async () => {
     const connection = await db.getConnection()
     const [rows] = await connection.query(
@@ -62,7 +74,8 @@ const addPost = async () => {
 }
 const addFile = async () => {
     const connection = await db.getConnection()
-    const [rows] = await connection.query(`insert into Files (
+    const [rows] = await connection.query(
+    `insert into Files (
         post_id,
         file_name,
         file_path
@@ -79,9 +92,23 @@ const addFile = async () => {
     await connection.release();
     return rows
 }
+const getFiles = async() => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+    `select file_name, file_path
+    from Files
+    where post_id = ?
+    `,[
+        params.post_id
+    ])
+    await connection.release();
+    return rows
+}
 module.exports = {
     params: params,
     getNextPage : getNextPage,
+    getPost     : getPost,
     addPost     : addPost,
-    addFile     : addFile
+    addFile     : addFile,
+    getFiles    : getFiles
 }

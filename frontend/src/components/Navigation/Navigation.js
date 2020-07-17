@@ -107,7 +107,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
               { name: '강의 게시판',   
                 destination: 'forum/lecture'}, 
               { name: '세미나 게시판', 
-                destination: 'forum'}]} , 
+                destination: 'forum/seminar'}]} , 
         { name: 'Login',onClick:callApi }
     ];
 
