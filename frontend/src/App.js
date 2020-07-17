@@ -5,6 +5,7 @@ import Forum from './page/Forum/Forum'
 import Main from './page/Main/Main'
 import AddPost from './page/AddPost/AddPost'
 import Post from './page/Post/Post'
+import Login from './page/Login/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
                 <Route exact path = "/forum/:category" component={Forum}/>
                 <Route exact path = "/forum/:category/:post_id" component={Post}/>
                 <Route path = "/forum/:category/addPost" component={AddPost}/>
+                <Route exact path = "/login" component={Login}/>
 
             </div>
         </BrowserRouter>
