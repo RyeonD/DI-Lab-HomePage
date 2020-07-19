@@ -38,8 +38,21 @@ const addUser = async () => {
     await connection.release();
     return rows
 }
+
+const checkuser_Id = async () => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `SELECT user_id from User
+        where user_id = ?
+        `,[
+            params.user_id
+    ])
+    await connection.release();
+    return rows
+}
 module.exports = {
     params: params,
     getUserInfo: getUserInfo,
-    addUser : addUser
+    addUser : addUser,
+    checkuser_Id : checkuser_Id
 }

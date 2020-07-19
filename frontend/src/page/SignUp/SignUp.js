@@ -9,6 +9,8 @@ const SignUp = () => {
     const [user_Id, setuser_Id] = useState(null);
     const [password, setPass] = useState(null);
     const [passCheck, setPassCheck] = useState(null);
+    var checkPass = new Boolean(false);
+    var checkId = new Boolean(true);
 
     const setNameText = e => {
         setName(e.target.value);
@@ -28,29 +30,49 @@ const SignUp = () => {
 
 
     const add_User = () => {
-        axios.post('/api/user/addUser', {
-            user_name: user_name,
-            user_Id: user_Id,
-            password: password
-        })
-            .then(function (response) {
-                console.log(response);
+        if (checkPass == true && checkId == true) {
+            axios.post('/api/user/addUser', {
+                user_name: user_name,
+                user_Id: user_Id,
+                password: password
             })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
-            });
-    }
-    /* onClick 메소드 부분 */
-    const user_IdCheck = () => {
-        var user = document.getElementById("user_Id").value;
-
-        if (user.length === 0) {
-            alert("아이디(학번)를 입력해주세요.");
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                });
+        } else {
+            alert("비밀번호 확인버튼이나 아이디 중복검사를 눌러주세요.");
         }
     }
 
+    const checkuser_Id = () => {
+        var user = document.getElementById("user_Id").value;
+        if (user.length === 0) {
+            alert("아이디(학번)를 입력해주세요.");
+        } else {
+            axios.post('/api/user/checkuser_Id', {
+                user_Id: user_Id,
+            })
+                .then(function (response) {
+                    if (response.data.result == undefined) {
+                        alert("사용 가능한 아이디입니다.");
+                    } else {
+                        checkId = false;
+                        alert("이미 가입된 아이디입니다.");
+                    }
+                    console.log(response.data.result);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                });
+        }
+    }
 
     const passWordCheck = () => {
         var pass1 = document.getElementById("password").value;
@@ -62,6 +84,7 @@ const SignUp = () => {
             alert("비밀번호가 틀립니다. 다시 입력해주세요.");
         } else {
             alert("비밀번호가 맞습니다.");
+            checkPass = true;
         }
     }
 
@@ -86,8 +109,7 @@ const SignUp = () => {
                     id="user_Id"
                     onChange={setIdText}
                 />
-                <Button value="중복체크" onClick={user_IdCheck}>중복체크</Button>
-                {/*중복체크 메소드 추가(onClick구현)*/}
+                <Button value="중복체크" onClick={checkuser_Id}>중복체크</Button>
                 <br />
 
                 <FormLabel htmlFor="password">비밀번호</FormLabel>
