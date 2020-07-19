@@ -26,29 +26,27 @@ const SignUp = () => {
         e.preventDefault();
     };
 
- 
+
     const add_User = () => {
         axios.post('/api/user/addUser', {
-            params: {
-              user_name : user_name,
-              user_Id : user_Id,
-              password : password
-            }
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .finally(function () {
-          }); 
+            user_name: user_name,
+            user_Id: user_Id,
+            password: password
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            .finally(function () {
+            });
     }
     /* onClick 메소드 부분 */
     const user_IdCheck = () => {
         var user = document.getElementById("user_Id").value;
 
-        if(user.length === 0){
+        if (user.length === 0) {
             alert("아이디(학번)를 입력해주세요.");
         }
     }
@@ -58,11 +56,11 @@ const SignUp = () => {
         var pass1 = document.getElementById("password").value;
         var pass2 = document.getElementById("passCheck").value;
 
-        if(pass1 === '' || pass2 === ''){
+        if (pass1 === '' || pass2 === '') {
             alert("비밀번호를 입력해주세요.");
-        }else if (pass1 !== pass2) {
+        } else if (pass1 !== pass2) {
             alert("비밀번호가 틀립니다. 다시 입력해주세요.");
-        }else{
+        } else {
             alert("비밀번호가 맞습니다.");
         }
     }

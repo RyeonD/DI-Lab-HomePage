@@ -9,7 +9,7 @@ const getUserInfo = asyncWrapper(async (req, res) => {
 })
 const addUser = asyncWrapper(async (req, res) => {
     dao.params.user_name = req.body.user_name;
-    dao.params.user_id   = req.body.user_id;
+    dao.params.user_id   = req.body.user_Id;
     dao.params.password  = req.body.password;
     const result = await dao.addUser();
     res.json({'result': result});
