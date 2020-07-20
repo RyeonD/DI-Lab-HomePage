@@ -1,4 +1,4 @@
-import dao from '../../model/mysql/userDAO';
+import dao from '../../model/mysql/loginDAO';
 import {asyncWrapper} from '../../lib/helper'
 const getUserAuth = asyncWrapper(async (req, res) => {
     dao.params.user_id = req.query.user_id;
@@ -6,15 +6,15 @@ const getUserAuth = asyncWrapper(async (req, res) => {
     console.log(req.query)
     const result = await dao.getUserInfo();
     console.log(result)
-    if(result !== 0) {
+    if(result.length !== 0) {
         const password = result[0].password;
-        if(password === req.params.password)
-            res.json(1)
+        if(password === dao.params.password)
+            console.log(1)
         else
-            res.json(1)
+            console.log(0)
     }
     else
-        res.json(-1)
+        console.log(-1)
 })
 
 module.exports = {

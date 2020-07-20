@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: '100%',
-        marginTop: theme.spacing(1),
+        marginTop: '64px',
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -41,6 +41,7 @@ class Login extends React.Component {
     }
     
     onSubmit = () => {
+        alert("로그인 완료");
         axios.get('/api/auth/userAuth',{
             params: {
                 user_id:`${this.state.id}`,
@@ -56,6 +57,7 @@ class Login extends React.Component {
             else if(value === 0) {
                 /* 비밀번호 틀림 */
                 console.log("비밀번호 문제");
+                
             }
             else {
                 /* 아이디 틀림 */
@@ -68,8 +70,8 @@ class Login extends React.Component {
     render() {
         const { id, pw } = this.state;
         return (
-            <Container component="main" maxwidth="xs">
-            <div className={useStyles.paper}>
+            <Container maxwidth="xs">
+            <div className={useStyles.paper} id="loginForm">
                 <form className={useStyles.form} noValidate>
                 <TextField  type="text" 
                             placeholder="아이디를 입력하세요."
