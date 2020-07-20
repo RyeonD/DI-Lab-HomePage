@@ -11,6 +11,9 @@
 # production
 /build
 config/dbConfig.js
+
+public/uploads/*
+!public/uploads/init.txt
 # misc
 .DS_Store
 .env.local

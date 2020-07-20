@@ -7,14 +7,14 @@ const params = {
 const getUserInfo = async() => {
     const connection = await db.getConnection()
     const [rows] = await connection.query(
-        `select *
-        from User
-        where user_id = ?`
-        ,[
+        `select * 
+         from User
+         where user_id = ?
+        `,[
             params.user_id
-        ])
-        await connection.relese();
-        return rows
+    ])
+    await connection.release();
+    return rows
 }
 module.exports = {
     params: params,

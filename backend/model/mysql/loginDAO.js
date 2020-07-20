@@ -13,7 +13,7 @@ const getUserInfo = async() => {
         ,[
             params.user_id
         ])
-        await connection.relese();
+        await connection.release();
         return rows
 }
 module.exports = {
