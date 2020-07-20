@@ -20,7 +20,7 @@ const App = () => {
                 <Route exact path = "/forum/:category/:post_id" component={Post}/>
                 <Route path = "/forum/:category/addPost" component={AddPost}/>
                 <Route exact path = "/login" component={Login}/>
-
+                
             </div>
         </BrowserRouter>
     )

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import Login from '../../page/Login/Login';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import { MenuItem, Menu } from '@material-ui/core';
+import { MenuItem, Menu, Modal } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -74,7 +75,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const classes = useStyles();
     let   history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [dropDownFlag, setDropDown] = useState(false);
+    const [dropDownFlag, setDropDown ] = useState(false);
     const openList = (e) => {
         setAnchorEl(e.currentTarget);
         setDropDown(!dropDownFlag)
@@ -95,6 +96,12 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             console.log(res);
         });
     };
+     const openLogin = () => {
+         return (
+             <p>dkfnsk</p>
+         )
+     }
+
     const menuItems = [
         { name: '연구실', 
           destination: '' }, 
@@ -109,8 +116,8 @@ const MenuList = React.memo(({ sideBarFlag }) => {
               { name: '세미나 게시판', 
                 destination: 'forum/seminar'}]} , 
         { name: 'Login',
-          onClick:callApi,
-          destination: 'Login' }
+          onClick:openLogin,
+          destination: 'Login'}
     ];
 
     return (
