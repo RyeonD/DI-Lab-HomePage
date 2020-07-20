@@ -1,15 +1,23 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
 import { TextField, makeStyles } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItem: 'center',
+    },
+    form: {
+        width: '100%',
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
     },
 }));
 
@@ -53,7 +61,6 @@ class Login extends React.Component {
                 /* 아이디 틀림 */
                 console.log("아이디 문제");
             }
-        
         });
         console.log(`ID: ${this.state.id} / PW: ${this.state.pw}`)
     }
@@ -61,31 +68,43 @@ class Login extends React.Component {
     render() {
         const { id, pw } = this.state;
         return (
-            <div className={useStyles.margin}>
-                <form method="post" className="loginForm">
-                    <TextField  type="text" 
-                            placeholder="아이디를 입력하세요." 
+            <Container component="main" maxwidth="xs">
+            <div className={useStyles.paper}>
+                <form className={useStyles.form} noValidate>
+                <TextField  type="text" 
+                            placeholder="아이디를 입력하세요."
+                            label="아이디" 
                             name="id"
                             value={id}
                             onChange={this.appChange}
                             onKeyPress={this.appKeyPress}
                             variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
                         />
-                    <TextField  type="password" 
+                <TextField  type="password" 
                             placeholder="비밀번호를 입력하세요."
+                            label="비밀번호"
                             name="pw"
                             value={pw}
                             onChange={this.appChange}
                             onKeyPress={this.appKeyPress}
                             variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
                         />
-                    <Button onClick={this.onSubmit}
-                            size="large"
-                            
+                <Button type="submit"
+                        onClick={this.onSubmit}
+                        variant="outlined"
+                        color="primary"
+                        className={useStyles.submit}
                         >로그인
-                        </Button>
-                    </form>
+                </Button>
+                </form>
             </div>
+            </Container>
         )
     }
  }
