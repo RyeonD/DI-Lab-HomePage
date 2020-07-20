@@ -41,7 +41,6 @@ class Login extends React.Component {
     }
     
     onSubmit = () => {
-        alert("로그인 완료");
         axios.get('/api/auth/userAuth',{
             params: {
                 user_id:`${this.state.id}`,
@@ -49,7 +48,7 @@ class Login extends React.Component {
             }
         }).then( res => {
             const value = res.data;
-            console.log(value);
+            console.log(res);
             if(value === 1) {
                 /* 로그인 */
                 console.log("로그인");
@@ -57,13 +56,14 @@ class Login extends React.Component {
             else if(value === 0) {
                 /* 비밀번호 틀림 */
                 console.log("비밀번호 문제");
-                
+                alert("비밀번호를 다시 입력하세요.");
             }
             else {
                 /* 아이디 틀림 */
                 console.log("아이디 문제");
             }
         });
+        
         console.log(`ID: ${this.state.id} / PW: ${this.state.pw}`)
     }
     
@@ -72,7 +72,6 @@ class Login extends React.Component {
         return (
             <Container maxwidth="xs">
             <div className={useStyles.paper} id="loginForm">
-                <form className={useStyles.form} noValidate>
                 <TextField  type="text" 
                             placeholder="아이디를 입력하세요."
                             label="아이디" 
@@ -101,10 +100,8 @@ class Login extends React.Component {
                         onClick={this.onSubmit}
                         variant="outlined"
                         color="primary"
-                        className={useStyles.submit}
                         >로그인
                 </Button>
-                </form>
             </div>
             </Container>
         )

@@ -9,12 +9,12 @@ const getUserAuth = asyncWrapper(async (req, res) => {
     if(result.length !== 0) {
         const password = result[0].password;
         if(password === dao.params.password)
-            console.log(1)
+            res.json(1)
         else
-            console.log(0)
+            res.json(0)
     }
     else
-        console.log(-1)
+        res.json(-1)
 })
 
 module.exports = {
