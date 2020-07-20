@@ -1,58 +1,66 @@
-import React from 'react';
-import Modal from '@material-ui/core/Modal';
+import React, {useState, setState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { TextField, makeStyles } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
+import { TextField, Container, Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
-import { toast } from 'react-toastify'
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        padding: theme.spacing(1),
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     paper: {
-        width: 400,
         backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        width: '450px',
+        height: '550px',
     },
-    
-    submit: {
-        margin: theme.spacing(3, 0, 2),
+    form: {
+        alignContent: 'center',
     },
-}));
-
-class Login extends React.Component {
-
-    state = {
-        id: '',
-        pw: ''
+    typography: {
+        textAlign: 'center',
+        margin: theme.spacing(7,'auto',4),
+        fontSize: '35px',
+        fontWeight: 700,
+    },
+    textInput: {
+        margin: theme.spacing(0.8,0),
+        width: '100%',
+        height: '55px',
+    },
+    loginButton: {
+        margin: theme.spacing(3,0,1),
+        width: '100%',
+        height: '50px',
+        fontSize: '17px',
+        color: 'white',
+        backgroundColor:'#3f51b5',
     }
-    
-    appChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+}))
 
-    appKeyPress = (e) => {
+const Login = () => { 
+    const classes = useStyles();
+    const [ user_id, setUserId ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ err, setError ] = useState('');
+    const appChange = (e) => {
+        if(e.target.id === "user_id")
+            setUserId(e.target.value);
+        else
+            setPassword(e.target.value);
+    }
+    const appKeyPress = (e) => {
         if(e.key === 'Enter') {
-            this.onSubmit();
+            onSubmit();
         }
     }
-    
-    throwErrorMessage = (message) => {
+    const throwErrorMessage = (message) => {
         toast.error(message, {
             position: toast.POSITION.TOP_CENTER,
-            autoClose: 5000,
+            autoClose: 1500,
         });
     }
-    validate = (value) => {
+    const validate = (value) => {
         if(value === 1) {
             /* 로그인 */
             console.log("로그인");
@@ -60,72 +68,69 @@ class Login extends React.Component {
         else if(value === 0) {
             /* 비밀번호 틀림 */
             console.log("비밀번호 문제");
-            this.throwErrorMessage("비밀번호가 틀렸습니다.");
+            throwErrorMessage("비밀번호가 틀렸습니다.");
+            setError('pw');
         }
         else {
             /* 아이디 틀림 */
             console.log("아이디 문제");
-            this.throwErrorMessage("아이디가 틀렸습니다.");
+            throwErrorMessage("아이디가 틀렸습니다.");
+            setError('id');
         }
         return true
     }
-
-    onSubmit = () => {
+    const onSubmit = (e) => {
         axios.get('/api/auth/userAuth',{
             params: {
-                user_id:`${this.state.id}`,
-                password:`${this.state.pw}`
+                user_id:`${user_id}`,
+                password:`${password}`
             }
         }).then( res => {
             const value = res.data;
-            console.log(res);
-            this.validate(value);
+            validate(value);
         });
         
-        console.log(`ID: ${this.state.id} / PW: ${this.state.pw}`)
+        console.log(`ID: ${user_id} / PW: ${password}`)
     }
-    
-    render() {
-        const { id, pw } = this.state;
-        return (
-            <Modal open="open">
-            <Container maxwidth="xs">
-            <div className={useStyles.paper} id="loginForm">
-                <TextField  type="text" 
-                            placeholder="아이디를 입력하세요."
-                            label="아이디" 
-                            name="id"
-                            value={id}
-                            onChange={this.appChange}
-                            onKeyPress={this.appKeyPress}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                        />
-                <TextField  type="password" 
-                            placeholder="비밀번호를 입력하세요."
-                            label="비밀번호"
-                            name="pw"
-                            value={pw}
-                            onChange={this.appChange}
-                            onKeyPress={this.appKeyPress}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                        />
-                <Button type="submit"
-                        onClick={this.onSubmit}
-                        variant="outlined"
-                        color="primary"
-                        >로그인
-                </Button>
-            </div>
-            </Container>
-            </Modal>
-        )
-    }
- }
 
+    return (
+        <Container className={classes.paper}>
+        <div className={classes.form} id="loginForm">
+            <Typography>
+                <Box className={classes.typography}>로그인</Box>
+            </Typography>
+            <TextField  error={err === 'id' ? true : false}
+                        type="text" 
+                        placeholder="아이디를 입력하세요."
+                        label="아이디" 
+                        id="user_id"
+                        value={user_id}
+                        onChange={appChange}
+                        onKeyPress={appKeyPress}
+                        variant="outlined"
+                        className={classes.textInput}
+                        required
+                />
+            <TextField  error={err === 'pw' ? true : false}
+                        type="password" 
+                        placeholder="비밀번호를 입력하세요."
+                        label="비밀번호"
+                        id="password"
+                        value={password}
+                        onChange={appChange}
+                        onKeyPress={appKeyPress}
+                        variant="outlined"
+                        className={classes.textInput}
+                        required
+                />
+            <Button type="submit"
+                    onClick={onSubmit}
+                    className={classes.loginButton}
+                >로그인
+            </Button>
+            <Button>회원가입</Button>
+        </div>
+        </Container>
+    )
+}
 export default Login;

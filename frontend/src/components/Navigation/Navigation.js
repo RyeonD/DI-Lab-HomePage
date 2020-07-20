@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import Login from '../../page/Login/Login';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +13,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
+
+import Login from '../../page/Login/Login';
+
 import {NavLink} from 'react-router-dom'
 import axios from 'axios';
 import './styles.scss'
@@ -50,7 +52,11 @@ const useStyles = makeStyles((theme) => ({
             textDecoration:'none',
         }
     },
-    
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 }));
 const StyledMenu = withStyles({
     paper: {
@@ -76,6 +82,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     let   history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [dropDownFlag, setDropDown ] = useState(false);
+    const [open, setOpen] = useState(false);
     const openList = (e) => {
         setAnchorEl(e.currentTarget);
         setDropDown(!dropDownFlag)
@@ -87,6 +94,12 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const closeMenu = () => {
         setAnchorEl(null);
     }
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
     const callApi = () => {
         axios.get('/api/user/userInfo',{
             params: {
@@ -96,11 +109,6 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             console.log(res);
         });
     };
-     const openLogin = () => {
-         return (
-             <p>dkfnsk</p>
-         )
-     }
 
     const menuItems = [
         { name: '연구실', 
@@ -115,9 +123,9 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                 destination: 'forum/lecture'}, 
               { name: '세미나 게시판', 
                 destination: 'forum/seminar'}]} , 
-        { name: 'Login',
-          onClick:openLogin,
-          destination: 'Login'}
+        { name: 'login',
+          onClick: handleOpen,
+          login: true }
     ];
 
     return (
@@ -162,13 +170,20 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                         color     = "inherit"
                         key       = {i}
                         id        = {item.destination}
-                        onClick   = {item.nested ? item.onClick : null}>
-                    {item.nested ? item.name :
+                        onClick   = {item.nested || item.login ? item.onClick : null}>
+                    {item.nested || item.login ? item.name :
                     <NavLink className = {classes.noDecoration}to = {{
                         pathname:`/${item.destination}`}}>
                         {item.name}
                     </NavLink>}
                 </Button>
+                {item.name === 'login' ?
+                    <Modal  className={classes.modal}
+                            open={open}
+                            onClose={handleClose}>
+                        <Login />
+                    </Modal> : null
+                }
                 {
                 item.nested ? 
                 <StyledMenu id         = {item.name}

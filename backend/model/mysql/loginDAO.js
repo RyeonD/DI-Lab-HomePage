@@ -1,7 +1,6 @@
 import db from './mysqlDBHelper';
 const params = {
     user_id      : null,
-    name         : null,
     password     : null
 }
 const getUserInfo = async() => {
