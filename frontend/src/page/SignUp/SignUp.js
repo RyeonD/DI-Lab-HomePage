@@ -5,6 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import LockIcon from '@material-ui/icons/Lock';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import UndoIcon from '@material-ui/icons/Undo';
 import axios from 'axios';
 {/* CSS부분 */ }
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +24,14 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    newicon: {
+        marginLeft: '90%',
+        marginTop: '-10%',
+        type: 'button'
+    },
+    icons: {
+        marginBottom: '-1.5%'
+    }
 }));
 
 const SignUp = () => {
@@ -26,9 +39,9 @@ const SignUp = () => {
     const [user_Id, setuser_Id] = useState('');
     const [password, setPass] = useState('');
     const [passCheck, setPassCheck] = useState('');
-
-    {/* MODAL 부분 */}
     const classes = useStyles();
+
+    {/* MODAL 부분 */ }
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -38,7 +51,7 @@ const SignUp = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    {/* MODAL 부분 */}
+    {/* MODAL 부분 */ }
 
     var checkPass = new Boolean(false);
     var checkId = new Boolean(true);
@@ -118,6 +131,18 @@ const SignUp = () => {
 
     return (
         <div className="div" id="signup">
+            <font size="5">회원가입</font>
+            <UndoIcon
+                fontSize="large"
+                color="primary"
+                className={classes.newicon}
+                onClick={handleClose}
+            >
+            </UndoIcon>
+            <br />
+            <br />
+
+            <AccessibilityNewIcon fontSize="large" color="primary" className={classes.icons}></AccessibilityNewIcon>
             <Input
                 className="input"
                 placeholder="이름"
@@ -128,6 +153,7 @@ const SignUp = () => {
             />
             <br />
 
+            <VpnKeyIcon fontSize="large" color="primary" className={classes.icons}></VpnKeyIcon>
             <Input
                 className="input"
                 placeholder="아이디(학번)"
@@ -140,6 +166,7 @@ const SignUp = () => {
             <Button className="button1" variant="outlined" color="primary" value="중복체크" onClick={checkuser_Id}>아이디 중복확인</Button>
             <br />
 
+            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
             <Input
                 className="input"
                 placeholder="비밀번호"
@@ -150,6 +177,7 @@ const SignUp = () => {
             />
             <br />
 
+            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
             <Input
                 className="input"
                 placeholder="비밀번호 재확인"
@@ -161,6 +189,7 @@ const SignUp = () => {
             <Button className="button1" variant="outlined" color="primary" value="비밀번호 재확인" onClick={passWordCheck}>비밀번호 재확인</Button>
             <br />
 
+            <SaveAltIcon fontSize="large" color="primary" className={classes.icons}></SaveAltIcon>
             <Button className="button2" variant="outlined" color="primary" value="가입완료" onClick={add_User}>가입완료</Button>
             <br />
 
@@ -180,10 +209,11 @@ const SignUp = () => {
                 BackdropProps={{
                     timeout: 500,
                 }}
+
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <SignUp/>
+                        <SignUp />
                     </div>
                 </Fade>
             </Modal>
