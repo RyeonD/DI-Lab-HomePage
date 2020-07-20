@@ -16,8 +16,8 @@ const App = () => {
                 <Route exact path = "/" component={Main}/>
                 <Route exact path = "/introduce" component={Main}/>
                 <Route exact path = "/forum/:category" component={Forum}/>
-                <Route exact path = "/forum/:category/:post_id" component={Post}/>
-                <Route path = "/forum/:category/addPost" component={AddPost}/>
+                <Route exact path = "/forum/:category/addPost" component={AddPost}/>
+                <Route exact path = "/forum/:category/:post_id/post" component={Post}/>
 
             </div>
         </BrowserRouter>

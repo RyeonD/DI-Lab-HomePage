@@ -145,7 +145,7 @@ const Forum = ({ match, location}) => {
                         <TableRow key={i}>
                         <TableCell className={classes.tableContents}component="th" scope="row" align="left">
                             <NavLink to = {{
-                                pathname: `/forum/${category}/${row.post_id}`,
+                                pathname: `/forum/${category}/${row.post_id}/post`,
                                 state:row
                             }}>
                                 {row.title}
