@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import LockIcon from '@material-ui/icons/Lock';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import UndoIcon from '@material-ui/icons/Undo';
+import { TextField, Container, Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+
 {/* CSS부분 */ }
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -24,14 +21,19 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
-    newicon: {
-        marginLeft: '90%',
-        marginTop: '-10%',
-        type: 'button'
+    textInput: {
+        margin: theme.spacing(0.8, 0),
+        width: '100%',
+        height: '55px',
     },
-    icons: {
-        marginBottom: '-1.5%'
-    }
+    signUpBT: {
+        margin: theme.spacing(3, 0, 1),
+        width: '100%',
+        height: '50px',
+        fontSize: '17px',
+        color: 'white',
+        backgroundColor: '#3f51b5',
+    },
 }));
 
 const SignUp = () => {
@@ -130,97 +132,90 @@ const SignUp = () => {
 
 
     return (
-        <div className="div" id="signup">
-            <font size="5">회원가입</font>
-            <UndoIcon
-                fontSize="large"
-                color="primary"
-                className={classes.newicon}
-                onClick={handleClose}
-            >
-            </UndoIcon>
-            <br />
-            <br />
+        <Container className={classes.paper}>
+            <div className={classes.form} id="signup">
+                <Box className={classes.typography}>
+                    <Typography className={classes.typography}>
+                        회원가입
+                    </Typography>
+                </Box>
+                <br />
 
-            <AccessibilityNewIcon fontSize="large" color="primary" className={classes.icons}></AccessibilityNewIcon>
-            <Input
-                className="input"
-                placeholder="이름"
-                type="text"
-                name="user_name"
-                id="user_name"
-                onChange={setNameText}
-            />
-            <br />
+                <TextField
+                    type="text"
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="이름*"
+                    name="user_name"
+                    id="user_name"
+                    onChange={setNameText}
+                />
+                <br />
 
-            <VpnKeyIcon fontSize="large" color="primary" className={classes.icons}></VpnKeyIcon>
-            <Input
-                className="input"
-                placeholder="아이디(학번)"
-                type="number"
-                name="user_Id"
-                id="user_Id"
-                onChange={setIdText}
-            />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="아이디(학번)*"
+                    type="number"
+                    name="user_Id"
+                    id="user_Id"
+                    onChange={setIdText}
+                />
 
-            <Button className="button1" variant="outlined" color="primary" value="중복체크" onClick={checkuser_Id}>아이디 중복확인</Button>
-            <br />
+                <Button className={classes.signUpBT} value="중복체크" onClick={checkuser_Id}>아이디 중복확인</Button>
+                <br />
 
-            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
-            <Input
-                className="input"
-                placeholder="비밀번호"
-                type="password"
-                name="password"
-                id="password"
-                onChange={setPassWord}
-            />
-            <br />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="비밀번호*"
+                    type="password"
+                    name="password"
+                    id="password"
+                    onChange={setPassWord}
+                />
+                <br />
 
-            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
-            <Input
-                className="input"
-                placeholder="비밀번호 재확인"
-                type="password"
-                name="passCheck"
-                id="passCheck"
-                onChange={setPassWordCheck}
-            />
-            <Button className="button1" variant="outlined" color="primary" value="비밀번호 재확인" onClick={passWordCheck}>비밀번호 재확인</Button>
-            <br />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="비밀번호 재확인*"
+                    type="password"
+                    name="passCheck"
+                    id="passCheck"
+                    onChange={setPassWordCheck}
+                />
+                <Button className={classes.signUpBT} value="비밀번호 재확인" onClick={passWordCheck}>비밀번호 재확인</Button>
+                <br />
 
-            <SaveAltIcon fontSize="large" color="primary" className={classes.icons}></SaveAltIcon>
-            <Button className="button2" variant="outlined" color="primary" value="가입완료" onClick={add_User}>가입완료</Button>
-            <br />
+                <Button className={classes.signUpBT} value="가입완료" onClick={add_User}>가입완료</Button>
 
 
-            {/* MODAL 부분 */}
-            <button type="button" onClick={handleOpen}>
-                modal check!
-            </button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
+                {/* MODAL 부분 */}
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
 
-            >
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <SignUp />
-                    </div>
-                </Fade>
-            </Modal>
-            {/* MODAL 부분 */}
+                >
+                    <Fade in={open}>
+                        <div className={classes.paper}>
+                            <SignUp />
+                        </div>
+                    </Fade>
+                </Modal>
+                {/* MODAL 부분 */}
 
 
-        </div>
+            </div>
+        </Container>
     );
 };
 
