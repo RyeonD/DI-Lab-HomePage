@@ -113,28 +113,21 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     };
     
     const menuItems = [
-        {
-            name: '연구실',
-            destination: ''
-        },
-        { name: '구성원' },
-        { name: '프로젝트' },
-        {
-            name: '게시판',
-            onClick: openMenu,
-            destination: 'openModal',
-            nested: [
-                {
-                    name: '강의 게시판',
-                    destination: 'forum/lecture'
-                },
-                {
-                    name: '세미나 게시판',
-                    destination: 'forum/seminar'
-                }]
-        },
-        { name: 'Login', onClick: callApi },
-        { name: '회원가입', destination: 'signup' },
+        { name: '연구실', 
+          destination: '' }, 
+        { name: '구성원' }, 
+        { name: '프로젝트'}, 
+        { name: '게시판', 
+          onClick: openMenu,
+          destination: 'openModal',
+          nested: [ 
+              { name: '강의 게시판',   
+                destination: 'forum/lecture'}, 
+              { name: '세미나 게시판', 
+                destination: 'forum/seminar'}]} , 
+        { name: 'Login',
+          onClick:callApi,
+          destination: 'Login' }
     ];
 
     return (

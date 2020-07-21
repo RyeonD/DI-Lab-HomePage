@@ -5,26 +5,21 @@ import Forum from './page/Forum/Forum'
 import Main from './page/Main/Main'
 import AddPost from './page/AddPost/AddPost'
 import Post from './page/Post/Post'
-import SignUp from './page/SignUp/SignUp'
+import Login from './page/Login/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Modal } from '@material-ui/core'
 const App = () => {
     return (
         <BrowserRouter>
             <div>
-                <ToastContainer />
-                <Navigation />
-                <Route exact path="/" component={Main} />
-                <Route exact path="/introduce" component={Main} />
-
-                {/* MODAL 확인하기위한 부분 */}
-                <Route exact path="/signup" component={SignUp} />
-                {/* MODAL 확인하기위한 부분 */}
-
-                <Route exact path="/forum/:category" component={Forum} />
-                <Route exact path="/forum/:category/:post_id" component={Post} />
-                <Route path="/forum/:category/addPost" component={AddPost} />
+                <ToastContainer/>
+                <Navigation/>
+                <Route exact path = "/" component={Main}/>
+                <Route exact path = "/introduce" component={Main}/>
+                <Route exact path = "/forum/:category" component={Forum}/>
+                <Route exact path = "/forum/:category/:post_id" component={Post}/>
+                <Route path = "/forum/:category/addPost" component={AddPost}/>
+                <Route exact path = "/login" component={Login}/>
 
             </div>
         </BrowserRouter>
