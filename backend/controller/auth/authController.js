@@ -6,12 +6,12 @@ const getUserAuth = asyncWrapper(async (req, res) => {
     console.log(req.query)
     const result = await dao.getUserInfo();
     console.log(result)
-    if(result !== 0) {
+    if(result.length !== 0) {
         const password = result[0].password;
-        if(password === req.params.password)
+        if(password === dao.params.password)
             res.json(1)
         else
-            res.json(1)
+            res.json(0)
     }
     else
         res.json(-1)

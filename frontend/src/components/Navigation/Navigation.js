@@ -7,15 +7,19 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import { MenuItem, Menu } from '@material-ui/core';
+import { MenuItem, Menu, Modal } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import { NavLink } from 'react-router-dom'
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+
+import Login from '../../page/Login/Login';
+
+import {NavLink} from 'react-router-dom'
 import axios from 'axios';
-import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import SignUp from '../../page/SignUp/SignUp'
@@ -57,14 +61,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-      },
-
+    },
 }));
 const StyledMenu = withStyles({
     paper: {
@@ -89,8 +86,9 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const classes = useStyles();
     let history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [dropDownFlag, setDropDown] = useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [dropDownFlag, setDropDown ] = useState(false);
+    const [open, setOpen] = useState(false);
+    const login = (<Login/>)
     const openList = (e) => {
         setAnchorEl(e.currentTarget);
         setDropDown(!dropDownFlag)
@@ -102,6 +100,12 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const closeMenu = () => {
         setAnchorEl(null);
     }
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
     const callApi = () => {
         axios.get('/api/user/userInfo', {
             params: {
@@ -111,7 +115,6 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             console.log(res);
         });
     };
-    
     const menuItems = [
         { name: '연구실', 
           destination: '' }, 
@@ -125,9 +128,9 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                 destination: 'forum/lecture'}, 
               { name: '세미나 게시판', 
                 destination: 'forum/seminar'}]} , 
-        { name: 'Login',
-          onClick:callApi,
-          destination: 'Login' }
+        { name: 'login',
+          onClick: handleOpen,
+          login: true }
     ];
 
     return (
@@ -169,43 +172,48 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             }
             else {
                 return (
-                    <React.Fragment key={i}>
-                        <Button className={sideBarFlag ? classes.sideBarButton : classes.navButton}
-                            color="inherit"
-                            key={i}
-                            id={item.destination}
-                            onClick={item.nested ? item.onClick : null}>
-                            {item.nested ? item.name :
-                                <NavLink className={classes.noDecoration} to={{
-                                    pathname: `/${item.destination}`
-                                }}>
-                                    {item.name}
-                                </NavLink>}
-                        </Button>
-                        {
-                            item.nested ?
-                                <StyledMenu id={item.name}
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl && anchorEl.id === item.destination)}
-                                    onClose={closeMenu}>
-                                    {item.nested.map((nestedItem, j) =>
-                                        <MenuItem key={j}
-                                            id={nestedItem.destination}
-                                            onClick={closeMenu}>
-                                            <NavLink className={classes.noDecoration} to={{
-                                                pathname: `/${nestedItem.destination}`
-                                            }}>
-                                                {nestedItem.name}
-                                            </NavLink>
-                                        </MenuItem>
-                                    )}
-                                </StyledMenu> : null
-                        }
-                    </React.Fragment>
-                )
-            }
-        })
+                <React.Fragment key = {i}>
+                <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
+                        color     = "inherit"
+                        key       = {i}
+                        id        = {item.destination}
+                        onClick   = {item.nested || item.login ? item.onClick : null}>
+                    {item.nested || item.login ? item.name :
+                    <NavLink className = {classes.noDecoration}to = {{
+                        pathname:`/${item.destination}`}}>
+                        {item.name}
+                    </NavLink>}
+                </Button>
+                {item.name === 'login' ?
+                    <Dialog  className={classes.modal}
+                            open={open}
+                            onClose={handleClose}>
+                        <Login />
+                    </Dialog> : null
+                }
+                {
+                item.nested ? 
+                <StyledMenu id         = {item.name}
+                            anchorEl   = {anchorEl}
+                            keepMounted
+                            open       = {Boolean(anchorEl && anchorEl.id === item.destination)}
+                            onClose    = {closeMenu}>
+                    {item.nested.map((nestedItem, j) => 
+                        <MenuItem key = {j}
+                                  id  = {nestedItem.destination}
+                                  onClick = {closeMenu}>
+                            <NavLink className = {classes.noDecoration}to = {{
+                                    pathname:`/${nestedItem.destination}`
+                            }}>
+                                {nestedItem.name}
+                            </NavLink>
+                        </MenuItem>
+                    )}
+                </StyledMenu>:null
+                }
+                </React.Fragment>
+            )}
+        })  
     )
 })
 const Navigation = () => {
