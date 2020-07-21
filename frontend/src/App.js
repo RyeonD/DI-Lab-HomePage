@@ -5,7 +5,7 @@ import Forum from './page/Forum/Forum'
 import Main from './page/Main/Main'
 import AddPost from './page/AddPost/AddPost'
 import Post from './page/Post/Post'
-import Login from './page/Login/Login'
+import Login from './components/Login/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {

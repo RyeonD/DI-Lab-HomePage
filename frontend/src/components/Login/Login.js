@@ -1,11 +1,12 @@
-import React, {useState, setState} from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { TextField, Container, Box } from '@material-ui/core';
+import { TextField, Container, Box, Dialog } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import axios from 'axios';
 import { toast } from 'react-toastify'
+import SignUp from '../SignUp/SignUp';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,6 +44,13 @@ const Login = () => {
     const [ user_id, setUserId ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ err, setError ] = useState('');
+    const [ open, setOpen ] = useState(false)
+    const signUp = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+    }
     const appChange = (e) => {
         if(e.target.id === "user_id")
             setUserId(e.target.value);
@@ -132,7 +140,11 @@ const Login = () => {
                     className={classes.loginButton}
                 >로그인
             </Button>
-            <Button>회원가입</Button>
+            <Button onClick = {signUp}>회원가입</Button>
+            <Dialog open      = {open}
+                    onClose   = {handleClose}>
+                <SignUp />
+            </Dialog>
         </div>
         </Container>
     )

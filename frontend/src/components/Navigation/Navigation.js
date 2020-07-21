@@ -1,29 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import { MenuItem, Menu, AppBar, Toolbar, 
+        Typography, Button, IconButton,  
+        Drawer, List, ListItem, ListItemText,
+        Collapse, Dialog } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import { MenuItem, Menu, Modal } from '@material-ui/core';
+
 import { useHistory } from 'react-router-dom'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-
-import Login from '../../page/Login/Login';
-
 import {NavLink} from 'react-router-dom'
 import axios from 'axios';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import SignUp from '../../page/SignUp/SignUp'
-import './styles.scss'
+
+import Login from '../Login/Login';
+import SignUp from '../SignUp/SignUp'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -185,9 +174,9 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                     </NavLink>}
                 </Button>
                 {item.name === 'login' ?
-                    <Dialog  className={classes.modal}
-                            open={open}
-                            onClose={handleClose}>
+                    <Dialog className = {classes.modal}
+                            open      = {open}
+                            onClose   = {handleClose}>
                         <Login />
                     </Dialog> : null
                 }
