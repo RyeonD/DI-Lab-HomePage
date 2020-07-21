@@ -50,15 +50,24 @@ const Post = ({match, location}) => {
             }
         })
     },[])
-    const edit = () => {
-
+    const removePost = () => {
+        axios.delete('/api/posts/post',{
+            params:{
+                post_id:match.params.post_id    
+            }
+        })
+        .then(res => {
+            console.log(res)
+            // setContents(<Viewer initialValue = {res.data.result[0].contents}/>)
+            // setPostObject(res.data.result[0])
+        })
     }
     return (
         <div className={classes.root}>
             <h1>{postObject.title}</h1>
             <NavLink to = {{
                 pathname: `/forum/${postObject.category}/addPost`,
-                state: postObject
+                state: {...postObject, editFlag:true}
             }}>
                 <Button className = {classes.button}
                         color     = "primary"
@@ -68,6 +77,7 @@ const Post = ({match, location}) => {
             </NavLink>
             <Button className = {classes.button}
                     color     = "secondary"
+                    onClick   = {removePost}
                     variant   = "outlined">
                 remove
             </Button>

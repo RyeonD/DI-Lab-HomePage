@@ -29,10 +29,12 @@ const AddPost = ({history, location, match}) => {
     const classes = useStyles();
     const [fileList, setFileList] = useState([]);
     const [params, setParams] = useState(new FormData());
-    useEffect(()=>{
+    useEffect(() => {
         if(location.state){
-            editorRef.current.getInstance().setMarkdown(location.state.contents)
-            titleRef.current.value = location.state.title
+            if(location.state.editFlag){
+                editorRef.current.getInstance().setMarkdown(location.state.contents)
+                titleRef.current.value = location.state.title
+            }
             console.log(location.state)
         }else{
             // match.params.category가 실제 있는 카테고리인지 검증한 후 처리
@@ -69,15 +71,26 @@ const AddPost = ({history, location, match}) => {
             params.append('category',  'lecture')
             params.append('user_name', '김종원')
             params.append('user_id',   201413286)
-            axios.post('/api/posts/post',params,
-            { headers : 
-                {'Content-Type': "multipart/form-data; boundary=''"}
-            })
-            .then((res) => {
-                history.push('/forum/lecture')
-            }).catch( err => {
-                console.log(err)
-            })
+            if(location.state && location.state.editFlag){
+                params.append('post_id', location.state.post_id)
+                axios.patch('/api/posts/post', params,
+                { headers : 
+                    {'Content-Type': "multipart/form-data; boundary=''"}
+                })
+                .then(res=>{
+                    history.push('/forum/lecture')
+                })
+            }else{
+                axios.post('/api/posts/post',params,
+                { headers : 
+                    {'Content-Type': "multipart/form-data; boundary=''"}
+                })
+                .then((res) => {
+                    history.push('/forum/lecture')
+                }).catch( err => {
+                    console.log(err)
+                })
+            }
         }
     }
     const handleFile = async (e) => {

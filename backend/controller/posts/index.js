@@ -18,4 +18,6 @@ router.get('/posts', controller.getNextPage)
 router.get('/post', controller.getPost)
 router.get('/files', controller.getFiles)
 router.post('/post', upload.array('files',10),controller.addPost)
+router.patch('/post', upload.array('files',10),controller.editPost)
+router.delete('/post', controller.removePost)
 module.exports = router;

@@ -104,11 +104,45 @@ const getFiles = async() => {
     await connection.release();
     return rows
 }
+const editPost = async () => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `update Posts 
+         set user_name = ?,
+             user_id = ?,
+             title = ?,
+             contents = ?,
+             category = ?
+        where post_id = ?
+        `,[
+            params.user_name,
+            params.user_id,
+            params.title,
+            params.contents,
+            params.category,
+            params.post_id
+    ])
+    await connection.release();
+    return rows
+}
+const removePost = async () => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `delete from Posts 
+         where post_id = ?
+        `,[
+            params.post_id
+    ])
+    await connection.release();
+    return rows
+}
 module.exports = {
     params: params,
     getNextPage : getNextPage,
     getPost     : getPost,
     addPost     : addPost,
     addFile     : addFile,
-    getFiles    : getFiles
+    getFiles    : getFiles,
+    editPost    : editPost,
+    removePost  : removePost
 }
