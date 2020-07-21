@@ -9,31 +9,26 @@ import { toast } from 'react-toastify'
 import SignUp from '../SignUp/SignUp';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        width: '450px',
-        height: '550px',
-    },
     form: {
-        alignContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%'
     },
     typography: {
         textAlign: 'center',
-        margin: theme.spacing(7,'auto',4),
-        fontSize: '35px',
-        fontWeight: 700,
-    },
+        margin: '10% auto',
+        fontSize: '200%',
+        fontWeight: '250%',
+    },   
     textInput: {
-        margin: theme.spacing(0.8,0),
-        width: '100%',
-        height: '55px',
+        width: '90%',
+        margin: '2% auto'
     },
     loginButton: {
-        margin: theme.spacing(3,0,1),
-        width: '100%',
-        height: '50px',
-        fontSize: '17px',
+        display: 'block',
+        margin: '8% auto 3%',
+        width: '90%',
         color: 'white',
         backgroundColor:'#3f51b5',
     }
@@ -102,14 +97,14 @@ const Login = () => {
     }
 
     return (
-        <Container className={classes.paper}>
+        
         <div className={classes.form} id="loginForm">
             
-                <Box className={classes.typography}>
-                    <Typography className={classes.typography}>
-                        로그인
-                    </Typography>
-                </Box>
+
+            <Typography className={classes.typography}>
+                로그인
+            </Typography>
+
             
             <TextField  error={err === 'id' ? true : false}
                         type="text" 
@@ -146,7 +141,7 @@ const Login = () => {
                 <SignUp />
             </Dialog>
         </div>
-        </Container>
+
     )
 }
 export default Login;

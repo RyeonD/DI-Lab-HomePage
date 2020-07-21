@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
             textDecoration: 'none',
         }
     },
-    modal: {
+    dialog : {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -174,7 +174,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                     </NavLink>}
                 </Button>
                 {item.name === 'login' ?
-                    <Dialog className = {classes.modal}
+                    <Dialog className = {classes.dialog}
                             open      = {open}
                             onClose   = {handleClose}>
                         <Login />
