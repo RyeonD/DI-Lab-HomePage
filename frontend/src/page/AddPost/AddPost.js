@@ -78,7 +78,7 @@ const AddPost = ({history, location, match}) => {
                     {'Content-Type': "multipart/form-data; boundary=''"}
                 })
                 .then(res=>{
-                    history.push('/forum/lecture')
+                    history.replace('/forum/lecture')
                 })
             }else{
                 axios.post('/api/posts/post',params,
@@ -86,7 +86,7 @@ const AddPost = ({history, location, match}) => {
                     {'Content-Type': "multipart/form-data; boundary=''"}
                 })
                 .then((res) => {
-                    history.push('/forum/lecture')
+                    history.replace('/forum/lecture')
                 }).catch( err => {
                     console.log(err)
                 })
