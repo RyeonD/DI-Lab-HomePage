@@ -109,7 +109,8 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const menuItems = [
         { name: '연구실', 
           destination: '' }, 
-        { name: '구성원' }, 
+        { name: '구성원',
+          destination: 'member'}, 
         { name: '프로젝트'}, 
         { name: '게시판', 
           onClick: openMenu,
