@@ -3,7 +3,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { MenuItem, Menu, AppBar, Toolbar, 
         Typography, Button, IconButton,  
         Drawer, List, ListItem, ListItemText,
-        Collapse, Dialog } from '@material-ui/core';
+        Collapse, Dialog, Container } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { useHistory } from 'react-router-dom'
@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     },
     '@media screen and (max-width: 600px)': {
         navButton: { display: 'none' },
-        menuButton: { display: 'inline-flex' }
+        menuButton: { display: 'inline-flex' },
+        dialogCon: { width: '100%' }
     },
     navButton: {
         marginRight: theme.spacing(2),
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     '@media screen and (min-width: 601px)': {
-        menuButton: { display: 'none' }
+        menuButton: { display: 'none' },
+        dialogCon: { width: '450px'}
     },
     title: {
         flexGrow: 1,
@@ -177,7 +179,9 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                     <Dialog className = {classes.dialog}
                             open      = {open}
                             onClose   = {handleClose}>
-                        <Login />
+                        <Container className={classes.dialogCon}>
+                            <Login />
+                        </Container>
                     </Dialog> : null
                 }
                 {

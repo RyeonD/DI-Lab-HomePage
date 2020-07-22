@@ -9,12 +9,10 @@ import { toast } from 'react-toastify'
 import SignUp from '../SignUp/SignUp';
 
 const useStyles = makeStyles((theme) => ({
-    '@media screen and (min-width: 601px)' : {
-        form: { width: '450px' },
+    '@media screen and (min-width: 1001px)' : {
         typography: { fontSize: '200%' }
     },
-    '@media screen and (max-width: 600px)' : {
-        form: { width: '100%' },
+    '@media screen and (max-width: 1000px)' : {
         typography: { fontSize: '150%' }
     },
     form: {
@@ -29,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '250%',
     },   
     textInput: {
-        width: '87%',
+        width: '100%',
         margin: '1% auto'
     },
     loginButton: {
         display: 'block',
         margin: '3% auto',
-        width: '87%',
+        width: '100%',
         color: 'white',
         backgroundColor:'#3f51b5',
     }
