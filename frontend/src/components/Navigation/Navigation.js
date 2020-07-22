@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
     },
     dialog : {
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
     },
 }));
 const StyledMenu = withStyles({
