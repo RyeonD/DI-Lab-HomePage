@@ -25,11 +25,26 @@ const useStyles = makeStyles((theme) => ({
 
 const AddPost = ({history, location, match}) => {
     const editorRef = React.createRef();
+    const titleRef = React.createRef();
     const classes = useStyles();
-    const [contents, setContents] = useState('');
     const [fileList, setFileList] = useState([]);
     const [params, setParams] = useState(new FormData());
-    useEffect(()=>{
+    useEffect(() => {
+        if(location.state){
+            if(location.state.editFlag){
+                editorRef.current.getInstance().setMarkdown(location.state.contents)
+                titleRef.current.value = location.state.title
+            }
+            console.log(location.state)
+        }else{
+            // match.params.category가 실제 있는 카테고리인지 검증한 후 처리
+            // match는 사용자가 url을 직접 입력해서 들어오는 경우임.
+            // category는 그 외의 경우
+            console.log(match)
+            console.log(location)
+        }
+
+
         editorRef.current.getInstance().getUI().getToolbar().removeItem(15)
     },[])
     const throwErrorMessage = (message) => {
@@ -56,15 +71,26 @@ const AddPost = ({history, location, match}) => {
             params.append('category',  'lecture')
             params.append('user_name', '김종원')
             params.append('user_id',   201413286)
-            axios.post('/api/posts/post',params,
-            { headers : 
-                {'Content-Type': "multipart/form-data; boundary=''"}
-            })
-            .then((res) => {
-                history.push('/forum/lecture')
-            }).catch( err => {
-                console.log(err)
-            })
+            if(location.state && location.state.editFlag){
+                params.append('post_id', location.state.post_id)
+                axios.patch('/api/posts/post', params,
+                { headers : 
+                    {'Content-Type': "multipart/form-data; boundary=''"}
+                })
+                .then(res=>{
+                    history.replace('/forum/lecture')
+                })
+            }else{
+                axios.post('/api/posts/post',params,
+                { headers : 
+                    {'Content-Type': "multipart/form-data; boundary=''"}
+                })
+                .then((res) => {
+                    history.replace('/forum/lecture')
+                }).catch( err => {
+                    console.log(err)
+                })
+            }
         }
     }
     const handleFile = async (e) => {
@@ -82,8 +108,9 @@ const AddPost = ({history, location, match}) => {
             <TextField className = {classes.title} 
                        id        = "title" 
                        label     = "Title" 
+                       inputRef  = {titleRef}
                        variant   = "filled" />
-            <Editor initialValue       = {contents}
+            <Editor initialValue       = {''}
                     previewStyle       = "vertical"
                     height             = "600px"
                     initialEditType    = "wysiwyg"

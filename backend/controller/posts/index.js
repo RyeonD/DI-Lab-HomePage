@@ -17,5 +17,9 @@ const router = express.Router();
 router.get('/posts', controller.getNextPage)
 router.get('/post', controller.getPost)
 router.get('/files', controller.getFiles)
-router.post('/post', upload.array('files',10),controller.addPost)
+router.post('/post', upload.array('files',70),controller.addPost)
+router.patch('/post', upload.array('files',70),controller.editPost)
+router.delete('/post', controller.removePost)
+router.get('/fileDownload', controller.fileDownload)
+router.get('/filesDownload', controller.filesDownload)
 module.exports = router;
