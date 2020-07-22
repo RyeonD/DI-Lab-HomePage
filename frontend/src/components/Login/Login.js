@@ -9,26 +9,33 @@ import { toast } from 'react-toastify'
 import SignUp from '../SignUp/SignUp';
 
 const useStyles = makeStyles((theme) => ({
+    '@media screen and (min-width: 601px)' : {
+        form: { width: '450px' },
+        typography: { fontSize: '200%' }
+    },
+    '@media screen and (max-width: 600px)' : {
+        form: { width: '100%' },
+        typography: { fontSize: '150%' }
+    },
     form: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '100%'
+        margin: '10% auto 15%',
     },
     typography: {
         textAlign: 'center',
-        margin: '10% auto',
-        fontSize: '200%',
+        margin: '5% auto 12%',
         fontWeight: '250%',
     },   
     textInput: {
-        width: '90%',
-        margin: '2% auto'
+        width: '87%',
+        margin: '1% auto'
     },
     loginButton: {
         display: 'block',
-        margin: '8% auto 3%',
-        width: '90%',
+        margin: '3% auto',
+        width: '87%',
         color: 'white',
         backgroundColor:'#3f51b5',
     }
