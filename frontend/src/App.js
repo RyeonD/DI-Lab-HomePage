@@ -6,6 +6,7 @@ import Main from './page/Main/Main'
 import AddPost from './page/AddPost/AddPost'
 import Post from './page/Post/Post'
 import {Provider} from './Context.js'
+import Member from './page/Member/Member'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
                     <Route exact path = "/forum/:category" component={Forum}/>
                     <Route exact path = "/forum/:category/addPost" component={AddPost}/>
                     <Route exact path = "/forum/:category/:post_id/post" component={Post}/>
-
+                    <Route exact path = "/member" component={Member}/>
                 </div>
             </Provider>
         </BrowserRouter>

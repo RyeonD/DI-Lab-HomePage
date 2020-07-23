@@ -10,10 +10,10 @@ import { toast } from 'react-toastify'
 import SignUp from '../SignUp/SignUp';
 
 const useStyles = makeStyles((theme) => ({
-    '@media screen and (min-width: 1001px)' : {
+    '@media screen and (min-width: 601px)' : {
         typography: { fontSize: '200%' }
     },
-    '@media screen and (max-width: 1000px)' : {
+    '@media screen and (max-width: 600px)' : {
         typography: { fontSize: '150%' }
     },
     form: {
