@@ -2,13 +2,14 @@ import dao from '../../model/mysql/postDAO';
 import {asyncWrapper} from '../../lib/helper'
 import zip from 'express-zip'
 const getNextPage = asyncWrapper(async (req, res) => {
+    
     dao.params.category = req.query.category;
     dao.params.from_number = parseInt(req.query.from_number);
     dao.params.number_of_posts = 20;
     const result = await dao.getNextPage();
     let   count  = 0
     if(result[0]) count = result[0]['counts'] 
-    res.json({'result':result, 'count':count});
+    res.json({'result':result, 'count':count, 'auth':req.decoded.authority});
 })
 const getPost = asyncWrapper(async (req, res) => {
     dao.params.post_id = req.query.post_id;

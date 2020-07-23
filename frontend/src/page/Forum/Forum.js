@@ -71,6 +71,7 @@ const Forum = ({ match, location}) => {
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
+    const [auth, setAuth] = useState(0);
     const classes = useStyles();
     const {category} = match.params
     const getPosts = () => {
@@ -82,6 +83,7 @@ const Forum = ({ match, location}) => {
         }).then( res => {
             setPosts(res.data.result);
             setPageCount(Math.ceil(res.data.count / 20))
+            setAuth(res.data.auth)
         });
     }
     useEffect(() => {
@@ -165,6 +167,7 @@ const Forum = ({ match, location}) => {
                         onChange  = {handlePage} 
                         showLastButton 
                         showFirstButton/>
+            {auth ? 
             <NavLink to = {{
                 pathname: `/forum/${category}/addPost`,
                 state:{
@@ -177,6 +180,7 @@ const Forum = ({ match, location}) => {
                     <AddIcon />
                 </Fab>
             </NavLink>
+            :null}
         </div>
     )
 }

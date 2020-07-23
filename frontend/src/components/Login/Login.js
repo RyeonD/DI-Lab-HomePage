@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { TextField, Container, Box, Dialog } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { useContextState, useContextDispatch } from '../../Context';
 
 import axios from 'axios';
 import { toast } from 'react-toastify'
@@ -40,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Login = () => { 
+    const context = useContextState();
+    const dispatch = useContextDispatch();
     const classes = useStyles();
     const [ user_id, setUserId ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -71,24 +74,22 @@ const Login = () => {
     const validate = (value) => {
         if(value === 1) {
             /* 로그인 */
-            console.log("로그인");
+            dispatch(true)
         }
         else if(value === 0) {
             /* 비밀번호 틀림 */
-            console.log("비밀번호 문제");
             throwErrorMessage("비밀번호가 틀렸습니다.");
             setError('pw');
         }
         else {
             /* 아이디 틀림 */
-            console.log("아이디 문제");
             throwErrorMessage("아이디가 틀렸습니다.");
             setError('id');
         }
         return true
     }
     const onSubmit = (e) => {
-        axios.get('/api/auth/userAuth',{
+        axios.get('/api/user/certifyResult',{
             params: {
                 user_id:`${user_id}`,
                 password:`${password}`
@@ -97,8 +98,6 @@ const Login = () => {
             const value = res.data;
             validate(value);
         });
-        
-        console.log(`ID: ${user_id} / PW: ${password}`)
     }
 
     return (

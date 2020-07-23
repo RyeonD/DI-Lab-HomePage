@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { MenuItem, Menu, AppBar, Toolbar, 
         Typography, Button, IconButton,  
@@ -11,7 +11,7 @@ import {NavLink} from 'react-router-dom'
 import axios from 'axios';
 
 import Login from '../Login/Login';
-import SignUp from '../SignUp/SignUp'
+import { useContextState, useContextDispatch } from '../../Context';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,11 +75,12 @@ const StyledMenu = withStyles({
 ));
 const MenuList = React.memo(({ sideBarFlag }) => {
     const classes = useStyles();
-    let history = useHistory();
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [dropDownFlag, setDropDown ] = useState(false);
     const [open, setOpen] = useState(false);
-    const login = (<Login/>)
+    const loginState = useContextState();
+    const dispatch = useContextDispatch();
     const openList = (e) => {
         setAnchorEl(e.currentTarget);
         setDropDown(!dropDownFlag)
@@ -97,20 +98,16 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const handleClose = () => {
         setOpen(false);
     }
-    const callApi = () => {
-        axios.get('/api/user/userInfo', {
-            params: {
-                user_id: '201413286'
-            }
-        }).then(res => {
-            console.log(res);
-        });
-    };
+    const goTo = (destination) => {
+        history.push(destination)
+    }
+    const logout = () => {
+        axios.put('/api/user/logout').then(res =>{
+            console.log(res)
+            dispatch(false)
+        })
+    }
     const menuItems = [
-        { name: '연구실', 
-          destination: '' }, 
-        { name: '구성원' }, 
-        { name: '프로젝트'}, 
         { name: '게시판', 
           onClick: openMenu,
           destination: 'openModal',
@@ -118,23 +115,49 @@ const MenuList = React.memo(({ sideBarFlag }) => {
               { name: '강의 게시판',   
                 destination: 'forum/lecture'}, 
               { name: '세미나 게시판', 
-                destination: 'forum/seminar'}]} , 
-        { name: 'login',
-          onClick: handleOpen,
-          login: true }
+                destination: 'forum/seminar'}]},
     ];
-
+    const platItems = [
+        { name: '연구실', 
+          destination: ''}, 
+        { name: '구성원' }, 
+        { name: '프로젝트'}, 
+    ]
+    useEffect(()=> {
+        if(loginState){
+            setOpen(false)
+        }else{
+            
+        }
+    },[loginState])
     return (
-        menuItems.map((item, i) => {
-            if (sideBarFlag && item.nested) {
+        <>
+        { platItems.map((item,i) => {
+            return(
+            <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
+                    color     = "inherit"
+                    key       = {i}
+                    onClick   = {()=>{goTo(item.destination)}}>
+                {item.name}
+            </Button>)
+        })}
+        <Dialog className = {classes.dialog}
+                open      = {open}
+                onClose   = {handleClose}>
+            <Container className={classes.dialogCon}>
+                <Login />
+            </Container>
+        </Dialog>
+       { menuItems.map((item, i) => {
+            if (sideBarFlag) {
                 return (
                     <List key={i}>
                         <Button className={sideBarFlag ? classes.sideBarButton
                             : classes.navButton}
-                            color="inherit"
-                            key={i}
-                            id={item.name}
-                            onClick={openList}>
+                            color   = "inherit"
+                            key     = {i}
+                            id      = {item.name}
+                            onClick = {openList}>
                             {item.name}
                         </Button>
                         <Collapse in={Boolean(dropDownFlag && anchorEl.id === item.name)}
@@ -164,49 +187,39 @@ const MenuList = React.memo(({ sideBarFlag }) => {
             else {
                 return (
                 <React.Fragment key = {i}>
-                <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
-                        color     = "inherit"
-                        key       = {i}
-                        id        = {item.destination}
-                        onClick   = {item.nested || item.login ? item.onClick : null}>
-                    {item.nested || item.login ? item.name :
-                    <NavLink className = {classes.noDecoration}to = {{
-                        pathname:`/${item.destination}`}}>
+                    <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
+                            color     = "inherit"
+                            key       = {i}
+                            id        = {item.destination}
+                            onClick   = {item.onClick}>
                         {item.name}
-                    </NavLink>}
-                </Button>
-                {item.name === 'login' ?
-                    <Dialog className = {classes.dialog}
-                            open      = {open}
-                            onClose   = {handleClose}>
-                        <Container className={classes.dialogCon}>
-                            <Login />
-                        </Container>
-                    </Dialog> : null
-                }
-                {
-                item.nested ? 
-                <StyledMenu id         = {item.name}
-                            anchorEl   = {anchorEl}
-                            keepMounted
-                            open       = {Boolean(anchorEl && anchorEl.id === item.destination)}
-                            onClose    = {closeMenu}>
-                    {item.nested.map((nestedItem, j) => 
-                        <MenuItem key = {j}
-                                  id  = {nestedItem.destination}
-                                  onClick = {closeMenu}>
-                            <NavLink className = {classes.noDecoration}to = {{
+                    </Button> 
+                    <StyledMenu id         = {item.name}
+                                anchorEl   = {anchorEl}
+                                keepMounted
+                                open       = {Boolean(anchorEl && anchorEl.id === item.destination)}
+                                onClose    = {closeMenu}>
+                        {item.nested.map((nestedItem, j) => 
+                            <MenuItem key = {j}
+                                    id  = {nestedItem.destination}
+                                    onClick = {closeMenu}>
+                                <NavLink className = {classes.noDecoration}to = {{
                                     pathname:`/${nestedItem.destination}`
-                            }}>
-                                {nestedItem.name}
-                            </NavLink>
-                        </MenuItem>
-                    )}
-                </StyledMenu>:null
-                }
+                                }}>
+                                    {nestedItem.name}
+                                </NavLink>
+                            </MenuItem>
+                        )}
+                    </StyledMenu>
                 </React.Fragment>
             )}
-        })  
+        }) } 
+        <Button className = {sideBarFlag ? classes.sideBarButton : classes.navButton} 
+                color     = "inherit"
+                onClick   = {loginState ? logout : handleOpen}>
+            {loginState ? 'LOGOUT' : 'LOGIN'}
+        </Button>
+        </>
     )
 })
 const Navigation = () => {
