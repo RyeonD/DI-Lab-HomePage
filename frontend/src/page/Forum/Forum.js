@@ -8,22 +8,18 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {Table, TableBody, TableCell, 
+        TableContainer, TableHead, TableRow,
+        Paper, Fab} from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
-import Fab from '@material-ui/core/Fab';
-
 import AddIcon from '@material-ui/icons/Add';
 
 import moment from 'moment';
 import 'moment/locale/ko'
 
 import axios from 'axios';
+import { useContextState } from '../../Context';
+
 const useStyles = makeStyles((theme) => ({
     wrapper:{
         height: 'calc(100% - 56px)',
@@ -71,8 +67,9 @@ const Forum = ({ match, location}) => {
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
-    const [auth, setAuth] = useState(0);
+    const [forumAuth, setForumAuth] = useState(0);
     const classes = useStyles();
+    const {login, userAuth, forumList} = useContextState()
     const {category} = match.params
     const getPosts = () => {
         axios.get('/api/posts/posts',{
@@ -83,7 +80,6 @@ const Forum = ({ match, location}) => {
         }).then( res => {
             setPosts(res.data.result);
             setPageCount(Math.ceil(res.data.count / 20))
-            setAuth(res.data.auth)
         });
     }
     useEffect(() => {
@@ -91,11 +87,18 @@ const Forum = ({ match, location}) => {
     },[])
     useEffect(() => {
         getPosts()
-    },[category])
+        const currentForum = forumList.filter(forum => forum.category === category)
+        if(currentForum.length !== 0){
+            if(currentForum[0].required_auth && login){
+                if(userAuth){ setForumAuth(true) }
+                else{         setForumAuth(false) }}
+            else{ setForumAuth(login) }
+        }
+    },[category, forumList, login, userAuth])
     const handlePage = (e, value) => {
         setPage(value);
         axios.get('/api/posts/posts',{
-            params:{
+            params:{ 
                 category:category,
                 from_number:(value-1) * 20
             }
@@ -167,7 +170,7 @@ const Forum = ({ match, location}) => {
                         onChange  = {handlePage} 
                         showLastButton 
                         showFirstButton/>
-            {auth ? 
+            {forumAuth ? 
             <NavLink to = {{
                 pathname: `/forum/${category}/addPost`,
                 state:{

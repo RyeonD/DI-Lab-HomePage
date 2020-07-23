@@ -8,6 +8,7 @@ import axios from 'axios';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Viewer } from '@toast-ui/react-editor';
+import { useContextState, useContextDispatch } from '../../Context';
 const useStyles = makeStyles((theme) => ({
     root:{
         width:'80%',
@@ -24,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Post = ({history, match, location}) => {
     const classes = useStyles()
+    const { userAuth }= useContextState()
     const [postObject, setPostObject] = useState('');
     const [contents, setContents] = useState('');
     const [files, setFiles] = useState([]);
     const [open, setOpen] = useState(false);
     const [openFiles, setOpenFiles] = useState(false);
-    const [allDownload, setAllDownload] = useState();
     const openFileDialog = () => {
         setOpenFiles(true)
     }
@@ -43,22 +44,17 @@ const Post = ({history, match, location}) => {
         setOpen(false)
     }
     useEffect(()=>{
-        if(location.state){
-            setContents(<Viewer initialValue = {location.state.contents}/>)
-            setPostObject(location.state)
-        }else{
-            axios.get('/api/posts/post',{
-                params:{
-                    post_id:match.params.post_id    
-                }
-            })
-            .then(res => {
-                console.log(res)
-                setContents(<Viewer initialValue = {res.data.result[0].contents}/>)
-                setPostObject(res.data.result[0])
-                setFiles(res.data.files)
-            })
-        }
+        axios.get('/api/posts/post',{
+            params:{
+                post_id:match.params.post_id    
+            }
+        })
+        .then(res => {
+            console.log(res)
+            setContents(<Viewer initialValue = {res.data.result[0].contents}/>)
+            setPostObject(res.data.result[0])
+            setFiles(res.data.files)
+        })
     },[])
     const removePost = () => {
         axios.delete('/api/posts/post',{
@@ -94,6 +90,8 @@ const Post = ({history, match, location}) => {
     return (
         <div className={classes.root}>
             <h1>{postObject.title}</h1>
+            {userAuth ? 
+            <>
             <NavLink to = {{
                 pathname: `/forum/${postObject.category}/addPost`,
                 state: {...postObject, editFlag:true}
@@ -110,6 +108,9 @@ const Post = ({history, match, location}) => {
                     variant   = "outlined">
                 remove
             </Button>
+            </>
+            : null
+            }
             <Button className = {classes.button}
                     color     = "primary"
                     onClick   = {openFileDialog}

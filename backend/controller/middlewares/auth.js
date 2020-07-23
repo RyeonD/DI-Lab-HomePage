@@ -1,5 +1,23 @@
 import jwt from 'jsonwebtoken'
 
+const checkJWT = (req, res, next) => {
+    const token = req.cookies.jwt
+    // create a promise that decodes the token
+    const p = new Promise(
+        (resolve, reject) => {
+            jwt.verify(token, 'dilab', (err, decoded) => {
+                if(err) resolve(false)
+                resolve(decoded)
+            })
+        }
+    )
+    // process the promise
+    p.then((decoded)=>{
+        req.decoded = decoded
+        next()
+    })
+}
+
 const authMiddleware = (req, res, next) => {
     // read the token from header or url 
     console.log('jwt::',req.cookies.jwt)
@@ -62,4 +80,4 @@ const authMiddleware = (req, res, next) => {
         next()
     }).catch(onError)
 }
-module.exports = authMiddleware
+module.exports = {authMiddleware, checkJWT}
