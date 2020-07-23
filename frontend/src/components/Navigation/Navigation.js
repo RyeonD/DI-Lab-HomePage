@@ -108,14 +108,6 @@ const MenuList = React.memo(({ sideBarFlag }) => {
         })
     }
     const menuItems = [
-<<<<<<< HEAD
-=======
-        { name: '연구실', 
-          destination: '' }, 
-        { name: '구성원',
-          destination: 'member'}, 
-        { name: '프로젝트'}, 
->>>>>>> 3b0309bff20d21a9558bc86924b64c0f330c4819
         { name: '게시판', 
           onClick: openMenu,
           destination: 'openModal',
@@ -128,7 +120,8 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     const platItems = [
         { name: '연구실', 
           destination: ''}, 
-        { name: '구성원' }, 
+        { name: '구성원',
+          destination: 'member'}, 
         { name: '프로젝트'}, 
     ]
     useEffect(()=> {
