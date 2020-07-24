@@ -136,13 +136,25 @@ const removePost = async () => {
     await connection.release();
     return rows
 }
+
+const getForumInfo = async () => {
+    const connection = await db.getConnection()
+    const [rows] = await connection.query(
+        `select *
+        from Forum
+        `
+    )
+    await connection.release();
+    return rows
+}
 module.exports = {
-    params: params,
-    getNextPage : getNextPage,
-    getPost     : getPost,
-    addPost     : addPost,
-    addFile     : addFile,
-    getFiles    : getFiles,
-    editPost    : editPost,
-    removePost  : removePost
+    params,
+    getNextPage,
+    getPost,
+    addPost,
+    addFile,
+    getFiles,
+    editPost,
+    removePost,
+    getForumInfo
 }

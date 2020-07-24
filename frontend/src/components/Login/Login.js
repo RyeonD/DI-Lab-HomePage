@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { TextField, Container, Box, Dialog } from '@material-ui/core';
+import { TextField, Dialog } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { useContextState, useContextDispatch } from '../../Context';
+import { useContextDispatch } from '../../Context';
 
 import axios from 'axios';
 import { toast } from 'react-toastify'
@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Login = () => { 
-    const context = useContextState();
-    const dispatch = useContextDispatch();
+    const {setLogin, setUserAuth} = useContextDispatch();
     const classes = useStyles();
     const [ user_id, setUserId ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -71,17 +70,19 @@ const Login = () => {
             autoClose: 1500,
         });
     }
-    const validate = (value) => {
-        if(value === 1) {
+    const validate = (certify) => {
+        if(certify.result === 1) {
             /* 로그인 */
-            dispatch(true)
+            setLogin(true)
+            setUserAuth(certify.auth)
+            console.log(certify)
         }
-        else if(value === 0) {
+        if(certify.result === 0) {
             /* 비밀번호 틀림 */
             throwErrorMessage("비밀번호가 틀렸습니다.");
             setError('pw');
         }
-        else {
+        if(certify.result === -1){
             /* 아이디 틀림 */
             throwErrorMessage("아이디가 틀렸습니다.");
             setError('id');
