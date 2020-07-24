@@ -44,12 +44,12 @@ const Login = () => {
     const [ user_id, setUserId ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ err, setError ] = useState('');
-    const [ open, setOpen ] = useState(false)
+    const [ open, setOpen ] = useState(false);
     const signUp = () => {
-        setOpen(true)
+        setOpen(true);
     }
     const handleClose = () => {
-        setOpen(false)
+        setOpen(false);
     }
     const appChange = (e) => {
         if(e.target.id === "user_id")

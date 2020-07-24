@@ -1,26 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import { TextField, Container, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import Login from '../Login/Login';
 import axios from 'axios';
 
 {/* CSS부분 */ }
 const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
     textInput: {
         margin: theme.spacing(0.8, 0),
         width: '100%',
@@ -37,24 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
-    const [user_name, setName] = useState(null);
+    const [user_name, setName] = useState('');
     const [user_Id, setuser_Id] = useState('');
     const [password, setPass] = useState('');
     const [passCheck, setPassCheck] = useState('');
     const classes = useStyles();
 
-    {/* MODAL 부분 */ }
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    {/* MODAL 부분 */ }
-
+    var checkName = new Boolean(false);
     var checkPass = new Boolean(false);
     var checkId = new Boolean(true);
 
@@ -73,13 +49,17 @@ const SignUp = () => {
 
     {/* 회원가입 버튼을 눌렀을때 실행될 함수 */ }
     const add_User = () => {
-        if (checkPass == true && checkId == true) {
+        if(user_name !== ''){
+            checkName = true;
+        }
+        if (checkPass == true && checkId == true && checkName == true) {
             axios.post('/api/user/addUser', {
                 user_name: user_name,
                 user_Id: user_Id,
                 password: password
             })
                 .then(function (response) {
+                    alert("회원가입이 완료되었습니다.");
                     console.log(response);
                 })
                 .catch(function (error) {
@@ -87,8 +67,8 @@ const SignUp = () => {
                 })
                 .finally(function () {
                 });
-        } else {
-            alert("비밀번호 확인버튼이나 아이디 중복검사를 눌러주세요.");
+        }else {
+            alert("이름,아이디,비밀번호를 확인해주세요.");
         }
     }
 
@@ -97,7 +77,6 @@ const SignUp = () => {
         if (user_Id === '') {
             alert("아이디(학번)를 입력해주세요.");
         } else {
-
             axios.post('/api/user/checkuser_Id', {
                 user_Id: user_Id,
             })
@@ -189,31 +168,6 @@ const SignUp = () => {
                 <br />
 
                 <Button className={classes.signUpBT} value="가입완료" onClick={add_User}>가입완료</Button>
-
-
-                {/* MODAL 부분 */}
-                <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={classes.modal}
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
-
-                >
-                    <Fade in={open}>
-                        <div className={classes.paper}>
-                            <SignUp />
-                        </div>
-                    </Fade>
-                </Modal>
-                {/* MODAL 부분 */}
-
-
             </div>
         </Container>
     );
