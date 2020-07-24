@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         width:'80%',
         maxWidth:'1000px',
         margin:'10px auto',
+        overflowWrap: 'break-word'
     },
     paper: {
         width:'450px',
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginRight: theme.spacing(2),
+    },
+    downloadLink: {
+        cursor: 'pointer'
     }
 }))
 const Post = ({history, match, location}) => {
@@ -59,7 +63,8 @@ const Post = ({history, match, location}) => {
     const removePost = () => {
         axios.delete('/api/posts/post',{
             params:{
-                post_id:match.params.post_id    
+                post_id:match.params.post_id,
+                files: files.map((file)=> file.file_path)
             }
         })
         .then(res => {
@@ -111,12 +116,15 @@ const Post = ({history, match, location}) => {
             </>
             : null
             }
+            {files.length ? 
             <Button className = {classes.button}
                     color     = "primary"
                     onClick   = {openFileDialog}
                     variant   = "outlined">
                 files
             </Button>
+            :null
+            }
             <Dialog open            = {openFiles}
                     maxWidth        = 'sm'
                     fullWidth       = {true}
@@ -126,10 +134,17 @@ const Post = ({history, match, location}) => {
                     File Download
                 </DialogTitle>
                 <DialogContent>
-                    <div onClick={allDown}>일괄 다운로드</div>
+                    <div className = {classes.downloadLink}
+                         onClick   = {allDown}>
+                             일괄 다운로드
+                    </div>
+                    <Divider/>
                     {files.map((file, i) => (
                         <React.Fragment key = {i}>
-                            <div onClick = {(e) => {downloadFile(file)}}> {file.file_name} </div>
+                            <div className = {classes.downloadLink}
+                                 onClick   = {(e) => {downloadFile(file)}}>
+                                    {file.file_name} 
+                            </div>
                             <Divider/>
                         </React.Fragment>
                     ))}

@@ -1,5 +1,6 @@
 import dao from '../../model/mysql/postDAO';
 import {asyncWrapper} from '../../lib/helper'
+import fs from 'fs'
 import zip from 'express-zip'
 const getNextPage = asyncWrapper(async (req, res) => {
     dao.params.category = req.query.category;
@@ -65,6 +66,13 @@ const editPost = asyncWrapper(async(req, res) => {
 const removePost = asyncWrapper(async(req, res) => {
     dao.params.post_id   = req.query.post_id;
     const result = await dao.removePost();
+    if(req.query.files){
+        for(const file of req.query.files){
+            fs.unlink(file,(err)=> {
+                if(err) console.log(err)
+            })
+        }
+    }
     res.json({'result': result});
 })
 const fileDownload = (req, res) => {

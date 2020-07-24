@@ -5,14 +5,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import {Table, TableBody, TableCell, 
         TableContainer, TableHead, TableRow,
-        Paper, Fab} from '@material-ui/core';
+        Paper, Button} from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
-import AddIcon from '@material-ui/icons/Add';
+
 
 import moment from 'moment';
 import 'moment/locale/ko'
@@ -30,6 +28,14 @@ const useStyles = makeStyles((theme) => ({
             height: `calc(100% - 64px)`
         },
         overflow:'auto',
+    },
+    '@media screen and (max-width: 600px)': {
+        table:{display:'none'},
+        root:{display:'inherit'}
+    },
+    '@media screen and (min-width: 601px)': {
+        root:{display:'none'},
+        table:{display:'inherit'}
     },
     table:{
         maxWidth:'1000px',
@@ -53,14 +59,21 @@ const useStyles = makeStyles((theme) => ({
         textOverflow:'ellipsis'
     },
     root: {
+        margin:'10px auto',
         width: '100%',
         maxWidth: '36ch',
         backgroundColor: theme.palette.background.paper,
-        zIndex:'-1'
     },
     inline: {
-        display: 'inline',
+        '-webkitLineClamp':'1',
+        '-webkitBoxOrient': 'vertical',
+        display: '-webkit-box',
+        overflow: 'hidden'
     },
+    functions:{
+        margin:'10px auto',
+        width: 'fit-content'
+    }
 }));
 
 const Forum = ({ match, location}) => {
@@ -109,31 +122,33 @@ const Forum = ({ match, location}) => {
     }
     return (
         <div className = {classes.wrapper} id ='forum'>
-            {/* <List className={classes.root}>
+            <List className={classes.root}>
                 {posts.map((row,i) => (
-                    <>
-                    <ListItem alignItems = "flex-start" key = {i}>
-                        <ListItemText
-                        primary={row.title}
-                        secondary={
-                            <React.Fragment>
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                className={classes.inline}
-                                color="textPrimary"
-                                >
-                                {row.user_name}
-                                </Typography>
-                                {' ' + row.contents}
-                                </React.Fragment>
-                            }
-                            />
-                            </ListItem>
-                            <Divider/>
-                            </>
-                            ))}
-                        </List> */}
+                    <React.Fragment key = {i}>
+                        <NavLink to = {{
+                                pathname: `/forum/${category}/${row.post_id}/post`
+                            }}>
+
+                        <ListItem alignItems = "flex-start" button>
+                            <ListItemText primary   = {row.title}
+                                          secondary = {
+                                <>
+                                    <Typography component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary">
+                                        {row.contents}
+                                    </Typography>
+                                    {row.user_name}  {`${moment(row.date).fromNow()}`}
+                                </>
+                            }/>
+                        </ListItem>
+                        </NavLink>                        
+
+                        <Divider/>
+                    </React.Fragment >
+                ))}
+            </List>
             <TableContainer component={Paper} className={classes.table}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -164,26 +179,28 @@ const Forum = ({ match, location}) => {
             </TableContainer>
             <Pagination className = {classes.customPage}
                         count     = {pageCount} 
-                        size      = "large" 
+                        size      = "small" 
                         page      = {page}
                         color     = "primary"
                         onChange  = {handlePage} 
                         showLastButton 
                         showFirstButton/>
-            {forumAuth ? 
-            <NavLink to = {{
-                pathname: `/forum/${category}/addPost`,
-                state:{
-                    category: category
-                }
-            }}>
-                <Fab color      = "primary" 
-                     size       = "small"
-                     aria-label = "add">
-                    <AddIcon />
-                </Fab>
-            </NavLink>
-            :null}
+            <div className={classes.functions}>
+                {forumAuth ? 
+                <NavLink to = {{
+                    pathname: `/forum/${category}/addPost`,
+                    state:{
+                        category: category
+                    }
+                }}>
+                    <Button className = {classes.button}
+                            color     = "primary"
+                            variant   = "outlined">
+                        글쓰기
+                    </Button>
+                </NavLink>
+                :null}
+            </div>
         </div>
     )
 }
