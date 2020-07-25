@@ -1,11 +1,11 @@
 import React from 'react'
 import Navigation from './components/Navigation/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
-import Forum from './page/Forum/Forum'
-import Main from './page/Main/Main'
-import AddPost from './page/AddPost/AddPost'
-import Post from './page/Post/Post'
-import Member from './page/Member/Member'
+import Forum from './page/Forum'
+import Main from './page/Main'
+import AddPost from './page/AddPost'
+import Post from './page/Post'
+import Member from './page/Member'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {

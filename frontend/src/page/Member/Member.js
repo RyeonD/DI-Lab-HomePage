@@ -5,7 +5,6 @@ import { makeStyles, } from '@material-ui/core/styles';
 import { Box, Avatar, Typography, Link, } from '@material-ui/core';
 
 import img from './cat.jpg'
-import shadows from '@material-ui/core/styles/shadows';
 
 const useStyles = makeStyles((theme) => ({
     '@media screen and (max-width: 1000px)': {
@@ -145,9 +144,7 @@ const rankList = [
         kor: '졸업생',
     },
 ];
-const memberInfoMenu = [
-    'rank', 'name', 'email'
-];
+
 const memberList = [
     {
         rank: 'professor',
