@@ -1,58 +1,36 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import LockIcon from '@material-ui/icons/Lock';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import UndoIcon from '@material-ui/icons/Undo';
+import { TextField, Container, Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Login from '../Login/Login';
 import axios from 'axios';
+
 {/* CSS부분 */ }
 const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+    textInput: {
+        margin: theme.spacing(0.8, 0),
+        width: '100%',
+        height: '55px',
     },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+    signUpBT: {
+        margin: theme.spacing(3, 0, 1),
+        width: '100%',
+        height: '50px',
+        fontSize: '17px',
+        color: 'white',
+        backgroundColor: '#3f51b5',
     },
-    newicon: {
-        marginLeft: '90%',
-        marginTop: '-10%',
-        type: 'button'
-    },
-    icons: {
-        marginBottom: '-1.5%'
-    }
 }));
 
 const SignUp = () => {
-    const [user_name, setName] = useState(null);
+    const [user_name, setName] = useState('');
     const [user_Id, setuser_Id] = useState('');
     const [password, setPass] = useState('');
     const [passCheck, setPassCheck] = useState('');
     const classes = useStyles();
 
-    {/* MODAL 부분 */ }
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    {/* MODAL 부분 */ }
-
+    var checkName = new Boolean(false);
     var checkPass = new Boolean(false);
     var checkId = new Boolean(true);
 
@@ -71,13 +49,17 @@ const SignUp = () => {
 
     {/* 회원가입 버튼을 눌렀을때 실행될 함수 */ }
     const add_User = () => {
-        if (checkPass == true && checkId == true) {
+        if(user_name !== ''){
+            checkName = true;
+        }
+        if (checkPass == true && checkId == true && checkName == true) {
             axios.post('/api/user/addUser', {
                 user_name: user_name,
                 user_Id: user_Id,
                 password: password
             })
                 .then(function (response) {
+                    alert("회원가입이 완료되었습니다.");
                     console.log(response);
                 })
                 .catch(function (error) {
@@ -85,8 +67,8 @@ const SignUp = () => {
                 })
                 .finally(function () {
                 });
-        } else {
-            alert("비밀번호 확인버튼이나 아이디 중복검사를 눌러주세요.");
+        }else {
+            alert("이름,아이디,비밀번호를 확인해주세요.");
         }
     }
 
@@ -95,7 +77,6 @@ const SignUp = () => {
         if (user_Id === '') {
             alert("아이디(학번)를 입력해주세요.");
         } else {
-
             axios.post('/api/user/checkuser_Id', {
                 user_Id: user_Id,
             })
@@ -130,97 +111,65 @@ const SignUp = () => {
 
 
     return (
-        <div className="div" id="signup">
-            <font size="5">회원가입</font>
-            <UndoIcon
-                fontSize="large"
-                color="primary"
-                className={classes.newicon}
-                onClick={handleClose}
-            >
-            </UndoIcon>
-            <br />
-            <br />
+        <Container className={classes.paper}>
+            <div className={classes.form} id="signup">
+                <Box className={classes.typography}>
+                    <Typography className={classes.typography}>
+                        회원가입
+                    </Typography>
+                </Box>
+                <br />
 
-            <AccessibilityNewIcon fontSize="large" color="primary" className={classes.icons}></AccessibilityNewIcon>
-            <Input
-                className="input"
-                placeholder="이름"
-                type="text"
-                name="user_name"
-                id="user_name"
-                onChange={setNameText}
-            />
-            <br />
+                <TextField
+                    type="text"
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="이름*"
+                    name="user_name"
+                    id="user_name"
+                    onChange={setNameText}
+                />
+                <br />
 
-            <VpnKeyIcon fontSize="large" color="primary" className={classes.icons}></VpnKeyIcon>
-            <Input
-                className="input"
-                placeholder="아이디(학번)"
-                type="number"
-                name="user_Id"
-                id="user_Id"
-                onChange={setIdText}
-            />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="아이디(학번)*"
+                    type="number"
+                    name="user_Id"
+                    id="user_Id"
+                    onChange={setIdText}
+                />
 
-            <Button className="button1" variant="outlined" color="primary" value="중복체크" onClick={checkuser_Id}>아이디 중복확인</Button>
-            <br />
+                <Button className={classes.signUpBT} value="중복체크" onClick={checkuser_Id}>아이디 중복확인</Button>
+                <br />
 
-            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
-            <Input
-                className="input"
-                placeholder="비밀번호"
-                type="password"
-                name="password"
-                id="password"
-                onChange={setPassWord}
-            />
-            <br />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="비밀번호*"
+                    type="password"
+                    name="password"
+                    id="password"
+                    onChange={setPassWord}
+                />
+                <br />
 
-            <LockIcon fontSize="large" color="primary" className={classes.icons}></LockIcon>
-            <Input
-                className="input"
-                placeholder="비밀번호 재확인"
-                type="password"
-                name="passCheck"
-                id="passCheck"
-                onChange={setPassWordCheck}
-            />
-            <Button className="button1" variant="outlined" color="primary" value="비밀번호 재확인" onClick={passWordCheck}>비밀번호 재확인</Button>
-            <br />
+                <TextField
+                    className={classes.textInput}
+                    variant="outlined"
+                    placeholder="비밀번호 재확인*"
+                    type="password"
+                    name="passCheck"
+                    id="passCheck"
+                    onChange={setPassWordCheck}
+                />
+                <Button className={classes.signUpBT} value="비밀번호 재확인" onClick={passWordCheck}>비밀번호 재확인</Button>
+                <br />
 
-            <SaveAltIcon fontSize="large" color="primary" className={classes.icons}></SaveAltIcon>
-            <Button className="button2" variant="outlined" color="primary" value="가입완료" onClick={add_User}>가입완료</Button>
-            <br />
-
-
-            {/* MODAL 부분 */}
-            <button type="button" onClick={handleOpen}>
-                modal check!
-            </button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-
-            >
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <SignUp />
-                    </div>
-                </Fade>
-            </Modal>
-            {/* MODAL 부분 */}
-
-
-        </div>
+                <Button className={classes.signUpBT} value="가입완료" onClick={add_User}>가입완료</Button>
+            </div>
+        </Container>
     );
 };
 
