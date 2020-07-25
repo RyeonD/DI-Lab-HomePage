@@ -143,7 +143,7 @@ const Login = () => {
             <Button onClick = {signUp}>회원가입</Button>
             <Dialog open      = {open}
                     onClose   = {handleClose}>
-                <SignUp />
+                <SignUp handleClose = {handleClose} />
             </Dialog>
         </div>
 
