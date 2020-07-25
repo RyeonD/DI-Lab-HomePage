@@ -9,7 +9,7 @@ import img from './cat.jpg'
 const useStyles = makeStyles((theme) => ({
     '@media screen and (max-width: 1000px)': {
         rankBox: {
-
+            
         },
         rankTitle: {
             margin: '5%',
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     rankBox: {
-        width: '100vw',
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
