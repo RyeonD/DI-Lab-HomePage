@@ -109,10 +109,13 @@ const MenuList = React.memo(({ sideBarFlag }) => {
     }
     const platItems = [
         { name: '연구실', 
-          destination: ''}, 
+          destination: ''},
+        { name: 'professor', 
+          destination: 'professor'}, 
         { name: '구성원',
           destination: '/member'}, 
-        { name: '프로젝트'}, 
+        { name: '프로젝트',
+          destination: 'project'}, 
     ]
     useEffect(()=> {
         console.log(login)
