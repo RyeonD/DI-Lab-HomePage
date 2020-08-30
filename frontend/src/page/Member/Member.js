@@ -6,53 +6,53 @@ import { Box, Avatar, Typography, Link, } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 const useStyles = makeStyles((theme) => ({
-    '@media screen and (max-width: 1000px)': {
+    '@media screen and (max-width: 649px)': {
+        root: {
+        },
         rankBox: {
-            
         },
         rankTitle: {
-            margin: '3vw',
+            margin: '10px',
         },
         rankTitleEng: {
-            fontSize: '4vw',
+            fontSize: '25px',
         },
         rankTitleKor: {
-            fontSize: '2vw'
+            fontSize: '17px',
         },
         profileBox: {
-            width: '90vw',
+            width: '100%',
         },
         profile: {
-            width: '37vw',
-            margin: '5vw 3vw',
-            padding: '5vw 1vw',
+            width: '85%',
+            margin: '10px auto',
+            padding: '10px 10px',
         },
         infomation: {
-            width: '20vw',
-            margin: '0 2vw',
-            
+            width: '80%',
+            margin: '0 10px',
         },
         alumniProfile: { 
-            width: '20vw',
-            margin: '3vw 3vw',
+            width: '250px',
+            margin: '15px auto',
         },
         profileImg: {
-            width: '10vw',
-            height: '10vw',
+            width: '90px',
+            height: '90px',
         },
         infoName: {
-            fontSize: '2.2vw',
+            fontSize: '18px',
         },
         info: {
-            fontSize: '1.2vw'
+            fontSize: '15px'
         },
         homepage: {
-            fontSize: '1.9vw'
+            fontSize: '16px'
         },
     },
-    '@media screen and (min-width: 1001px)': {
+    '@media screen and (min-width: 650px) and (max-width: 1000px)': {
         root: {
-            margin: '0 50px'
+            margin: '0 50px',
         },
         rankBox: {
         },
@@ -68,15 +68,15 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '20px',
         },
         profileBox: {
-            width: '1200px',
-            padding: '0 50px',
+            width: '600px',
+            padding: '0 30px',
         },
         profile: {
-            width: '470px',
-            margin: '50px 5px',
+            width: '460px',
+            margin: '50px 5px 50px 0px',
         },
         alumniProfile: { 
-            width: '300px',
+            width: '250px',
             margin: '40px 10px',
         },
         profileImg: {
@@ -87,11 +87,58 @@ const useStyles = makeStyles((theme) => ({
             margin: '0 10px',
         },
         infoName: {
-            fontSize: '28px',
+            fontSize: '25px',
             padding: '5px 0'
         },
         info: {
-            fontSize: '16px',
+            fontSize: '17px',
+        },
+        homepage: {
+            fontSize: '21.5px'
+        }
+    },
+    '@media screen and (min-width: 1001px)': {
+        root: {
+            margin: '0 50px',
+        },
+        rankBox: {
+        },
+        rankTitle: {
+            width: '500px',
+            margin: '40px 0 0',
+            padding: '5px'
+        },
+        rankTitleEng: {
+            fontSize: '40px',
+        },
+        rankTitleKor: {
+            fontSize: '20px',
+        },
+        profileBox: {
+            width: '1000px',
+            padding: '0 30px',
+        },
+        profile: {
+            width: '460px',
+            margin: '50px 5px 50px 0px',
+        },
+        alumniProfile: { 
+            width: '250px',
+            margin: '40px 10px',
+        },
+        profileImg: {
+            width: theme.spacing(20),
+            height: theme.spacing(20),
+        },
+        infomation: {
+            margin: '0 10px',
+        },
+        infoName: {
+            fontSize: '25px',
+            padding: '5px 0'
+        },
+        info: {
+            fontSize: '17px',
         },
         homepage: {
             fontSize: '21.5px'
@@ -146,6 +193,9 @@ const useStyles = makeStyles((theme) => ({
     info: {
         color: '#82848c',
     },
+    homepage: {
+        color: '#111b54',
+    },
 }));
 
 const rankList = [
@@ -193,7 +243,9 @@ const memberList = [
         rank: 'master',
         name: '김선욱',
         image: '',
-        email: '@kangwon.ac.kr'
+        interest: '머신러닝 / 연합학습',
+        email: 'king950411@gmail.com',
+        homepage: '',
     },
     {
         rank: 'master',
