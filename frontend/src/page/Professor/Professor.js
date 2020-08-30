@@ -16,13 +16,17 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
-    
+
     table: {
         maxWidth: 800
     },
     profileImage: {
-        margin: '50px 120px 25px 0'
+        margin: '50px 50px 0 0'
+    },
+    profile:{
+        margin:'50px 0 0 0'
     }
+
 }))
 const Professor = () => {
     const classes = useStyles();
@@ -32,28 +36,28 @@ const Professor = () => {
             <div class="container">
                 <div className={classes.info}>
                     <img className={classes.profileImage} src={profile} width='190' height='270'></img>
-                <div className={classes.profile}>
-                <header class="major">
-                    <h2>Profile</h2>
-                    <h3>Professor</h3>
-                </header>
-                <p>Dept. of Computer and Communications Engineering<br></br>
-                College of Information Technology<br></br>
-                Kangwon National University, Chuncheon, Republic of Korea<br></br>
-                (강원대학교 IT 대학 컴퓨터학부 교수 김화종)<br></br>
-                </p>
-                <p>
-                    강원도 춘천시 강원대학길 1 공대6호관 403호(24341)<br></br>
-                    403, Dept. of Computer and Communications Engineering, 1, Gangwondaehak-gil, <br></br>
-                    Chuncheon-si, Gangwon-do, Republic of Korea, 24341<br></br>
-                </p>
-                <p>
-                    Fax: 033-259-5677<br></br>
-                    Phone: 033-250-6323<br></br>
-                    e-mail: hjkim3@gmail.com<br></br>
-                </p>
-            </div>
-            </div>
+                    <div className={classes.profile}>
+                        <header class="major">
+                            <h2>Profile</h2>
+                            <h3>Professor</h3>
+                        </header>
+                        <p>Dept. of Computer and Communications Engineering<br></br>
+                    College of Information Technology<br></br>
+                    Kangwon National University, Chuncheon, Republic of Korea<br></br>
+                    (강원대학교 IT 대학 컴퓨터학부 교수 김화종)<br></br>
+                        </p>
+                        <p>
+                            강원도 춘천시 강원대학길 1 공대6호관 403호(24341)<br></br>
+                        403, Dept. of Computer and Communications Engineering, 1, Gangwondaehak-gil, <br></br>
+                        Chuncheon-si, Gangwon-do, Republic of Korea, 24341<br></br>
+                        </p>
+                        <p>
+                            Fax: 033-259-5677<br></br>
+                        Phone: 033-250-6323<br></br>
+                        e-mail: hjkim3@gmail.com<br></br>
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div><br></br></div>

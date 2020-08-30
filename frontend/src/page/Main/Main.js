@@ -7,9 +7,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import IconButton from '@material-ui/core/IconButton';
 import SwipeableViews from 'react-swipeable-views';
-import togetherImage from'./together.png';
-import togetherImage2 from'./together2.png';
-import togetherImage3 from'./together3.png';
+import togetherImage from'./together3.png';
 
 const useStyles = makeStyles((theme) => ({
     wrapper:{
@@ -127,7 +125,7 @@ const Main = () => {
                 <img style = {{'width': '100%',
                                 'minHeight': '300px',
                                 'margin':'-255px 0 -5px 0',
-                                'maxHeight': '400px'}} src= {togetherImage3}/>
+                                'maxHeight': '400px'}} src= {togetherImage}/>
                 </div>
         </div>
     )
