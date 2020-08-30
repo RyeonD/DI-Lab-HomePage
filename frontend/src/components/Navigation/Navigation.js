@@ -108,14 +108,12 @@ const MenuList = React.memo(({ sideBarFlag }) => {
         })
     }
     const platItems = [
-        { name: '연구실', 
-          destination: ''},
-        { name: 'professor', 
-          destination: 'professor'}, 
-        { name: '구성원',
+        { name: 'Professor', 
+          destination: '/professor'}, 
+        { name: 'Members',
           destination: '/member'}, 
-        { name: '프로젝트',
-          destination: 'project'}, 
+        { name: 'Projects',
+          destination: '/project'}, 
     ]
     useEffect(()=> {
         console.log(login)
@@ -150,7 +148,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                 color   = "inherit"
                 id      = 'forum'
                 onClick = {openList}>
-                게시판
+                Forum
             </Button>
             <Collapse in={Boolean(dropDownFlag && anchorEl.id === 'forum')}
                       timeout="auto"
@@ -177,7 +175,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
                 <Button className = {classes.navButton} 
                         onClick   = {openMenu}
                         color     = "inherit">
-                    게시판
+                    Forum
                 </Button> 
                 <StyledMenu anchorEl   = {anchorEl}
                             keepMounted
