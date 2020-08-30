@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         },
         rankTitle: {
             margin: '5%',
-            width: '20vw',
         },
         rankTitleEng: {
             fontSize: '5vw',
@@ -35,15 +34,14 @@ const useStyles = makeStyles((theme) => ({
             margin: '10px auto'
         },
         infoName: {
-            fontSize: '4vw',
+            fontSize: '3vw',
         },
         info: {
-            fontSize: '2.2vw'
+            fontSize: '2vw'
         }
     },
     '@media screen and (min-width: 1001px)': {
         rankBox: {
-
         },
         rankTitle: {
             width: '500px',
@@ -55,16 +53,16 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '20px',
         },
         profileBox: {
-            width: '1000px',
-            padding: '70px'
+            width: '1700px',
+            padding: '70px',
         },
         profile: {
             width: '300px',
             margin: '50px 5px',
         },
         profileImg: {
-            width: theme.spacing(27),
-            height: theme.spacing(27),
+            width: theme.spacing(20),
+            height: theme.spacing(20),
             margin: '10px auto'
         },
         infoName: {
@@ -80,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
+        margin:'0 12vw'
     },
     rankBox: {
         width: '100%',
@@ -124,10 +123,6 @@ const useStyles = makeStyles((theme) => ({
 
 const rankList = [
     {
-        eng: 'professor',
-        kor: '교수',
-    },
-    {
         eng: 'doctor',
         kor: '박사',
     },
@@ -147,104 +142,145 @@ const rankList = [
 
 const memberList = [
     {
-        rank: 'professor',
-        name: '김화종',
-        image: img,
-        email: 'hjkim@gmail.com',
-        room: '공대 6호관 403호',
-        homepage: 'https://www.kangwon.ac.kr/www/index.do'
+        rank: 'doctor',
+        name: '방준일',
+        image: '',
+        email: '@kangwon.ac.kr',
+        homepage: ''
     },
     {
         rank: 'doctor',
+        name: '홍성은',
+        image: '',
+        email: '@kangwon.ac.kr',
+        homepage: 'httsp://github.com/sungkenh',
+    },
+    {
+        rank: 'master',
+        name: '이현수',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'master',
+        name: '김선욱',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'master',
+        name: '박태주',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'master',
+        name: '이현수',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'bachelor',
         name: '김종원',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'bachelor',
+        name: '이규민',
+        image: '',
+        email: '@kangwon.ac.kr'
+    },
+    {
+        rank: 'alumni',
+        name: '권혁민',
         image: '',
         email: '123@kangwon.ac.kr',
-        homepage: 'df'
-    },
-    {
-        rank: 'master',
-        name: '김경',
-        image: '',
-        email: '123@kangwon.ac.kr'
-    },
-    {
-        rank: 'doctor',
-        name: '김련경',
-        image: '',
-        email: '12@kangwon.ac.kr'
-    },
-    {
-        rank: 'master',
-        name: '김욱',
-        image: '',
-        email: '12@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김원',
-        image: '',
-        email: '123@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김련',
-        image: '',
-        email: '12@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김종원',
-        image: '',
-        email: '123@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김경',
-        image: '',
-        email: '123@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김련경',
-        image: '',
-        email: '12@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
-        name: '김욱',
-        image: '',
-        email: '12@kangwon.ac.kr'
+        job: '스위트케이',
     },
     {
         rank: 'alumni',
-        name: '김종',
-        image: '',
-        email: '123@kangwon.ac.kr'
-    },
-    {
-        rank: 'alumni',
-        name: '김선',
+        name: '이덕주',
         image: '',
         email: '',
-        job: '네이버'
+        job: 'SK security',
     },
     {
-        rank: 'bachelor',
-        name: '김련',
-        image: '',
-        email: '12@kangwon.ac.kr'
-    },
-    {
-        rank: 'bachelor',
+        rank: 'alumni',
         name: '김종원',
         image: '',
-        email: '123@kangwon.ac.kr'
+        email: '',
+        job: '',
     },
     {
-        rank: 'bachelor',
-        name: '김경',
+        rank: 'alumni',
+        name: '김태성',
         image: '',
-        email: '123@kangwon.ac.kr'
+        email: '',
+        job: '',
+    },
+    {
+        rank: 'alumni',
+        name: '한주석',
+        image: '',
+        email: '',
+        job: '',
+    },
+    {
+        rank: 'alumni',
+        name: '신주환',
+        image: '',
+        email: '',
+        job: '오라클',
+    },
+    {
+        rank: 'alumni',
+        name: '박대서',
+        image: '',
+        email: '',
+        job: '',
+    },
+    {
+        rank: 'alumni',
+        name: '강문현',
+        image: '',
+        email: '',
+        job: '더존',
+    },
+    {
+        rank: 'alumni',
+        name: '박민영',
+        image: '',
+        email: '',
+        job: '더존',
+    },
+    {
+        rank: 'alumni',
+        name: '김성중',
+        image: '',
+        email: '',
+        job: '롯데',
+    },
+    {
+        rank: 'alumni',
+        name: '안두헌',
+        image: '',
+        email: '',
+        job: '',
+    },
+    {
+        rank: 'alumni',
+        name: '오치문',
+        image: '',
+        email: '',
+        job: '카카오',
+    },
+    {
+        rank: 'alumni',
+        name: '장걸',
+        image: '',
+        email: '',
+        job: '베이징대 교수',
     },
 ]
 

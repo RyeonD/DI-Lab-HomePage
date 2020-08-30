@@ -6,6 +6,8 @@ import Main from './page/Main'
 import AddPost from './page/AddPost'
 import Post from './page/Post'
 import Member from './page/Member'
+import Professor from './page/Professor'
+import Project from './page/Project'
 import {Provider} from './Context.js'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +24,8 @@ const App = () => {
                     <Route exact path = "/forum/:category/addPost" component={AddPost}/>
                     <Route exact path = "/forum/:category/:post_id/post" component={Post}/>
                     <Route exact path = "/member" component={Member}/>
+                    <Route exact path = "/professor" component={Professor}/>
+                    <Route exact path = "/project" component={Project}/>
                 </div>
             </Provider>
         </BrowserRouter>
