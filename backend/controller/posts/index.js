@@ -6,9 +6,11 @@ import {authMiddleware} from '../middlewares/auth';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
+        console.log(file)
         cb(null, 'public/uploads')
     },
     filename:(req, file, cb) => {
+        console.log(file)
         const fileType = file.originalname.split('.')
         cb(null, `${uuidv4()}.${fileType[fileType.length-1]}`)
     }

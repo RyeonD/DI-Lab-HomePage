@@ -32,7 +32,7 @@ const getCertifyResult = asyncWrapper(async (req, res) => {
             res.cookie('jwt', token, {
                 httpOnly: true,
             })
-            res.json({'result':1,'auth':result[0].authority})
+            res.json({'result':1,'auth':{'authority':result[0].authority, 'id':result[0].user_Id, 'name':result[0].name}})
         }
         else
             res.json({'result':0})
@@ -55,7 +55,7 @@ const createToken = (user) => {
 }
 const getJWT = (req, res) => {
     if(req.decoded) 
-        return res.json(req.decoded.authority)
+        return res.json(req.decoded)
     else 
         return res.json(false)
 }

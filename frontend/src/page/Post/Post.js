@@ -12,6 +12,7 @@ import { useContextState, useContextDispatch } from '../../Context';
 const useStyles = makeStyles((theme) => ({
     root:{
         width:'80%',
+        minHeight:'700px',
         maxWidth:'1000px',
         margin:'10px auto',
         overflowWrap: 'break-word'
@@ -95,7 +96,7 @@ const Post = ({history, match, location}) => {
     return (
         <div className={classes.root}>
             <h1>{postObject.title}</h1>
-            {userAuth ? 
+            {userAuth !== 0 && (userAuth.authority === 1 || userAuth.id === postObject.user_id) ? 
             <>
             <NavLink to = {{
                 pathname: `/forum/${postObject.category}/addPost`,

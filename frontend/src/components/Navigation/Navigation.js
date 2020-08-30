@@ -111,7 +111,7 @@ const MenuList = React.memo(({ sideBarFlag }) => {
         { name: '연구실', 
           destination: ''}, 
         { name: '구성원',
-          destination: 'member'}, 
+          destination: '/member'}, 
         { name: '프로젝트'}, 
     ]
     useEffect(()=> {
@@ -208,12 +208,13 @@ const Navigation = () => {
     const toggleDrawer = useCallback(e => {
         setToggleFlag(!toggleFlag)
     }, [toggleFlag])
+    const history = useHistory();
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar className='toolbar'>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography style={{'cursor': 'pointer'}} variant="h6" className={classes.title} onClick = {() => history.push('/')}>
                         DI Lab
                     </Typography>
                     <MenuList />

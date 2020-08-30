@@ -20,6 +20,7 @@ export const Provider = ({children}) => {
         .then(res => {
             if(res.data){
                 setLogin(true)
+                console.log(res.data)
                 setUserAuth(res.data)
             }
         })

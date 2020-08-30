@@ -28,6 +28,7 @@ const AddPost = ({history, location, match}) => {
     const titleRef = React.createRef();
     const classes = useStyles();
     const [fileList, setFileList] = useState([]);
+    const [category, setCategory] = useState('');
     const [params, setParams] = useState(new FormData());
     useEffect(() => {
         if(location.state){
@@ -35,16 +36,15 @@ const AddPost = ({history, location, match}) => {
                 editorRef.current.getInstance().setMarkdown(location.state.contents)
                 titleRef.current.value = location.state.title
             }
-            console.log(location.state)
+            setCategory(location.state.category)
         }else{
             // match.params.category가 실제 있는 카테고리인지 검증한 후 처리
             // match는 사용자가 url을 직접 입력해서 들어오는 경우임.
             // category는 그 외의 경우
+
             console.log(match)
             console.log(location)
         }
-
-
         editorRef.current.getInstance().getUI().getToolbar().removeItem(15)
     },[])
     const throwErrorMessage = (message) => {
@@ -68,9 +68,7 @@ const AddPost = ({history, location, match}) => {
         if(validate()){
             params.append('title',     document.getElementById('title').value)
             params.append('contents',  editorRef.current.getInstance().getMarkdown())
-            params.append('category',  'lecture')
-            params.append('user_name', '김종원')
-            params.append('user_id',   201413286)
+            params.append('category',  category)
             if(location.state && location.state.editFlag){
                 params.append('post_id', location.state.post_id)
                 axios.patch('/api/posts/post', params,
@@ -78,7 +76,7 @@ const AddPost = ({history, location, match}) => {
                     {'Content-Type': "multipart/form-data; boundary=''"}
                 })
                 .then(res=>{
-                    history.replace('/forum/lecture')
+                    history.replace(`/forum/${category}`)
                 })
             }else{
                 axios.post('/api/posts/post',params,
@@ -86,7 +84,7 @@ const AddPost = ({history, location, match}) => {
                     {'Content-Type': "multipart/form-data; boundary=''"}
                 })
                 .then((res) => {
-                    history.replace('/forum/lecture')
+                    history.replace(`/forum/${category}`)
                 }).catch( err => {
                     console.log(err)
                 })
@@ -100,6 +98,10 @@ const AddPost = ({history, location, match}) => {
             fileNames.push(item.name)
             files.append('files', item)
         })
+        for(let file of files.entries()){
+            console.log(file);
+        }
+        
         setFileList(fileNames)
         setParams(files)
     }

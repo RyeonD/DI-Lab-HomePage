@@ -20,13 +20,6 @@ import { useContextState } from '../../Context';
 
 const useStyles = makeStyles((theme) => ({
     wrapper:{
-        height: 'calc(100% - 56px)',
-        '@media (min-width: 0px) and  (orientation: landscape)' : {
-            height: `calc(100% - 48px)`
-        },
-        '@media (min-width:600px)': {
-            height: `calc(100% - 64px)`
-        },
         overflow:'auto',
     },
     '@media screen and (max-width: 600px)': {
@@ -103,7 +96,7 @@ const Forum = ({ match, location}) => {
         const currentForum = forumList.filter(forum => forum.category === category)
         if(currentForum.length !== 0){
             if(currentForum[0].required_auth && login){
-                if(userAuth){ setForumAuth(true) }
+                if(userAuth.authority){ setForumAuth(true) }
                 else{         setForumAuth(false) }}
             else{ setForumAuth(login) }
         }

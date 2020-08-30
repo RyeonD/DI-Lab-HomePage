@@ -21,8 +21,8 @@ const addPost = asyncWrapper(async (req, res) => {
     dao.params.title     = req.body.title;
     dao.params.category  = req.body.category;
     dao.params.contents  = req.body.contents;
-    dao.params.user_name = req.body.user_name;
-    dao.params.user_id   = req.body.user_id;
+    dao.params.user_name = req.decoded.name
+    dao.params.user_id   = req.decoded.id
     const result = await dao.addPost();
     if(req.files.length){
         dao.params.post_id = result.insertId
