@@ -11,8 +11,17 @@ const useStyles = makeStyles((theme) => ({
         margin: '0 10%',
         fontSize: '15px'
     },
+    info: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    
     table: {
         maxWidth: 800
+    },
+    profileImage: {
+        margin: '50px 120px 25px 0'
     }
 }))
 const Professor = () => {
@@ -21,7 +30,9 @@ const Professor = () => {
         <section className={classes.containers}>
 
             <div class="container">
-                <img src={profile} margin='5%' width='117' height='161'></img>
+                <div className={classes.info}>
+                    <img className={classes.profileImage} src={profile} width='190' height='270'></img>
+                <div className={classes.profile}>
                 <header class="major">
                     <h2>Profile</h2>
                     <h3>Professor</h3>
@@ -41,6 +52,8 @@ const Professor = () => {
                     Phone: 033-250-6323<br></br>
                     e-mail: hjkim3@gmail.com<br></br>
                 </p>
+            </div>
+            </div>
             </div>
 
             <div><br></br></div>
