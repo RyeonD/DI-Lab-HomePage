@@ -11,9 +11,7 @@ import togetherImage from'./together3.png';
 
 const useStyles = makeStyles((theme) => ({
     wrapper:{
-        '@media screen and (max-width: 600px)': {
-            root:{width:'100%'}
-        },
+        backgroundColor:'#59595c',
     },
     mainImage:{
         width: '100%',
@@ -123,9 +121,8 @@ const Main = () => {
 또한 연구원은 진행중인 프로젝트에 참여하게되어 최신 관련 분야의 이슈에 대해서 다루게 됩니다.<br/>
                     </div>
                 <img style = {{'width': '100%',
-                                'minHeight': '300px',
                                 'margin':'-255px 0 -5px 0',
-                                'maxHeight': '400px'}} src= {togetherImage}/>
+                                'height': '400px'}} src= {togetherImage}/>
                 </div>
         </div>
     )

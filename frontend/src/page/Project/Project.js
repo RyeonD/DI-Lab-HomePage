@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     containers: {
-        margin:'0 10%',
+        margin:'50px 10%',
         fontSize: '15px'
     }
 }))
